@@ -1,0 +1,102 @@
+/*공용*/
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+li {list-style: none;}
+.fcc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+header {
+    position: fixed;
+    top:0;
+    bottom: 0;
+    z-index: 100;
+
+    margin: 0;
+    padding: 50px 25px;
+
+	width: 300px;
+	background-color: white;
+	box-shadow: 22px 0 40px 0 rgb(49 52 132/ 10%);
+}
+
+/*로고 및 아이콘*/
+.logoImg {
+    width: 150px;
+    height: 150px;
+    background-image: url("./img/logoImg.png");
+    background-size: 150px;
+
+    margin-bottom: 50px;
+}
+.ico {
+    padding-left: 40px;
+    background-size: 25px;
+    background-repeat: no-repeat;
+}
+.loginIco {
+    padding-left: 45px;
+    background-image: url("./img/loginImg.png");
+    background-size: 30px;
+}
+.viewAllIco {background-image: url("./img/viewAll.png");}
+.rainIco {background-image: url("./img/rain.png");}
+.studyIco {background-image: url("./img/study.png");}
+.healthIco {background-image: url("./img/health.png");}
+.sleepIco {background-image: url("./img/sleep.png");}
+
+/*로그인*/
+.loginArea {
+    flex-flow: column;
+	border: 1px solid rgba(207, 207, 207, .3);
+	border-right: 0;
+	border-left: 0;
+	padding: 20px 20px;
+	margin-bottom: 60px;
+	font-size: 25px;
+    font-weight: bold;
+	color: #7e7e7e;
+}
+.loginArea > div:nth-child(2) > a {
+    font-size: 15px;
+    opacity: 0.5;
+    margin-top: 15px;
+}
+
+/*좌측 네비*/
+nav > ul {
+    flex-flow: column;
+    padding: 0;
+
+    font-size: 20px;
+	color: rgba(66, 66, 66, .95);
+}
+nav > ul > li:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+/*메인*/
+main {margin-left: 300px;}
+.bannerImg {
+    height: 300px;
+    background-image: url("./img/banner1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.8;
+
+    font-size: 50px;
+    font-weight: bold;
+    color: white;
+}
+.musicList {
+
+}
+

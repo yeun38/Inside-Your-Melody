@@ -1,5 +1,5 @@
 body {
-    background-color: lightgrey;
+    background-color: white;
     min-height: 100vh;
     padding-top: 100px;
 }
@@ -7,9 +7,10 @@ body {
 .section {
     padding: 1rem 1.5rem;
     max-width: 750px;
-    margin: 50px auto;
-
-    background-color: antiquewhite;
+    margin-left: 450px;
+    margin-bottom: 50px;
+    background: rgba(97, 65, 172, .5);
+    border-radius: 20px;
 }
 
 
@@ -54,6 +55,7 @@ body {
     width: 600px;
     height: 100px;
     margin: 20px 0;
+    border-radius: 20px;
 }
 
 

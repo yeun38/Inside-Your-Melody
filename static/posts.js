@@ -51,18 +51,19 @@ function show_reply() {
                     let reply = replys[i]
                     let time_post = new Date(reply["date"])
                     let time_before = time2str(time_post)
-                    let html_temp = `<div class="box" id="">
+                    let class_heart = reply['heart_by_me'] ? "fa-heart": "fa-heart-o"
+                    let html_temp = `<div class="box" id="${replys["_id"]}">
                                         <article class="media">
                                             <div class="media-left">
                                                 <a class="image is-64x64" href="#">
-                                                    <img class="is-rounded" src="http://via.placeholder.com/64"
+                                                    <img class="is-rounded" src="/static/${reply['profile_pic_real']}"
                                                          alt="Image">
                                                 </a>
                                             </div>
                                             <div class="media-content">
                                                 <div class="content">
                                                     <p>
-                                                        <strong>홍길동</strong> <small>@${reply['username']}</small> <small>${time_before}</small>
+                                                        <strong>@${reply['username']}</strong> <small>${time_before}</small>
                                                         <br>
                                                             ${reply['comment']}
                                                     </p>
@@ -70,10 +71,10 @@ function show_reply() {
                                                 <nav class="level is-mobile">
                                                     <div class="level-left">
                                                         <a class="level-item is-sparta" aria-label="heart"
-                                                           onclick="toggle_like('', 'heart')">
-                                                            <span class="icon is-small"><i class="fa fa-heart"
+                                                           onclick="toggle_like('${replys["_id"]}', 'heart')">
+                                                            <span class="icon is-small"><i class="fa ${class_heart}"
                                                                                            aria-hidden="true"></i></span>&nbsp;<span
-                                                            class="like-num">2.7k</span>
+                                                            class="like-num"></span>
                                                         </a>
                                                     </div>
                 
@@ -107,5 +108,41 @@ function send(){
         }
 
 
+function toggle_like(post_id, type) {
+    console.log(post_id, type)
+    let $a_like = $(`#${post_id} a[aria-label='heart']`)
+    let $i_like = $a_like.find("i")
+    if ($i_like.hasClass("fa-heart")) {
+        $.ajax({
+            type: "POST",
+            url: "/update_like",
+            data: {
+                post_id_give: post_id,
+                type_give: type,
+                action_give: "unlike"
+            },
+            success: function (response) {
+                console.log("unlike")
+                $i_like.addClass("fa-heart-o").removeClass("fa-heart")
+                $a_like.find("span.like-num").text(response["count"])
+            }
+        })
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "/update_like",
+            data: {
+                post_id_give: post_id,
+                type_give: type,
+                action_give: "like"
+            },
+            success: function (response) {
+                console.log("like")
+                $i_like.addClass("fa-heart").removeClass("fa-heart-o")
+                $a_like.find("span.like-num").text(response["count"])
+            }
+        })
 
+    }
+}
 

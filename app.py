@@ -27,7 +27,7 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 
-        return render_template('login.html')
+        return render_template('index.html')
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -37,7 +37,7 @@ def home():
 @app.route('/login')
 def login():
     msg = request.args.get("msg")
-    return render_template('login.html', msg=msg)
+    return render_template('index.html', msg=msg)
 
 @app.route('/sign_in', methods=['POST'])
 def sign_in():
@@ -68,8 +68,8 @@ def sign_up():
     password_receive = request.form['password_give']
     password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
     doc = {
-        "username": username_receive,  # 아이디
-        "password": password_hash  # 비밀번호
+        "username": username_receive,                               # 아이디
+        "password": password_hash                                   # 비밀번호
     }
     db.users.insert_one(doc)
     return jsonify({'result': 'success'})
@@ -80,6 +80,25 @@ def check_dup():
     username_receive = request.form['username_give']
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
+
+#처리 중
+@app.route('/delete_user', methods=['POST'])
+def delete_user():
+    username_receive = request.form['username_give']
+    password_receive = request.form['password_give']
+
+    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+    result = db.users.find_one({'username': username_receive, 'password': pw_hash})
+
+    if result is not None:
+
+        db.users.delete_one({'username': username_receive, 'password': pw_hash})
+
+        return jsonify({'result': 'success', 'msg': '탈퇴가 완료되었습니다'})
+        return render_template('index.html', msg=msg)
+    # 찾지 못하면
+    else:
+        return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
 
 if __name__ == '__main__':

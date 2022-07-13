@@ -123,9 +123,6 @@ function sign_in() {
         success: function (response) {
             if (response['result'] == 'success') {
                 $.cookie('mytoken', response['token'], {path: '/'});
-                $('#loginArea').addClass('is-hidden');
-                $('#delete_user').removeClass('is-hidden');
-                $('#delete_user2').removeClass('is-hidden');
                 window.location.replace("/")
             } else {
                 alert(response['msg'])
@@ -137,7 +134,7 @@ function sign_in() {
 function sign_out() {
     $.removeCookie('mytoken', {path: '/'});
     alert('로그아웃!')
-    window.location.href = "/login"
+    window.location.replace("/")
 }
 
 function delete_user() {

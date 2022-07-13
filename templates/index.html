@@ -24,9 +24,10 @@
     <div class="fcc">
         <a class="logoImg icos" href=""></a>
     </div>
-    <div  id="loginArea" class="loginArea fcc">
-        <div><a class="ico loginIco icos" onclick='$("#modal-login").addClass("is-active"), $("#modal-signup").removeClass("is-active")'>로그인</a></div>
-        <div><a onclick='$("#modal-signup").addClass("is-active"), $("#modal-login").removeClass("is-active")'>회원가입</a></div>
+    <div id="loginArea" class="loginArea fcc">
+        <div id="signin-btn"><a class="ico loginIco icos" onclick='$("#modal-login").addClass("is-active"), $("#modal-signup").removeClass("is-active")'>로그인</a></div>
+        <div id="deleteuser-btn"><a onclick='$("#modal-signup").addClass("is-active"), $("#modal-login").removeClass("is-active")'>회원가입</a></div>
+{#        회원탈퇴 버튼에 효과주기 onclick='$("#modal-delete-user").addClass("is-active")' #}
     </div>
     <nav>
         <ul class="fcc">
@@ -37,8 +38,6 @@
             <li><div><a class="ico sleepIco icos" href="">잠들기 전</a></div></li>
         </ul>
     </nav>
-    <hr id="delete_user2" class="is-hidden">
-    <div><a id="delete_user" class="fcc" onclick='$("#modal-delete-user").addClass("is-active")'>회원탈퇴</a></div>
 </header>
 <main>
     <div class="bannerImg fcc">#전체 보기</div>

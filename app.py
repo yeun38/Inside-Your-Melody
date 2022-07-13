@@ -81,7 +81,7 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
-#처리 중
+
 @app.route('/delete_user', methods=['POST'])
 def delete_user():
     username_receive = request.form['username_give']

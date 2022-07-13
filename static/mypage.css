@@ -61,3 +61,18 @@ textarea::placeholder {
     height: 30px;
     font-size: 12px;
 }
+
+.file-cta {
+    background: inherit;
+    border-radius: 25px !important;
+    border-color: rgb(97, 65, 172);
+    color: white;
+    font-weight: bold;
+}
+.file-label {
+    padding: 0 10px;
+}
+.file-label:hover {
+    border-color: rgb(97, 65, 172);
+    color: rgb(97, 65, 172);
+}

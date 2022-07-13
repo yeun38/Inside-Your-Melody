@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Inside Your Melody</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="../static/header.js"></script>
     <link href="../static/header.css" rel="stylesheet">
@@ -18,18 +23,101 @@
     </div>
     <nav>
         <ul class="fcc">
-            <li><div><a class="ico viewAllIco icos" href="">전체 보기</a></div></li>
-            <li><div><a class="ico rainIco icos" href="">비오는 날</a></div></li>
-            <li><div><a class="ico studyIco icos" href="">공부할 때</a></div></li>
-            <li><div><a class="ico healthIco icos" href="">운동할 때</a></div></li>
-            <li><div><a class="ico sleepIco icos" href="">잠들기 전</a></div></li>
+            <li>
+                <div><a class="ico viewAllIco icos" href="">전체 보기</a></div>
+            </li>
+            <li>
+                <div><a class="ico rainIco icos" href="">비오는 날</a></div>
+            </li>
+            <li>
+                <div><a class="ico studyIco icos" href="">공부할 때</a></div>
+            </li>
+            <li>
+                <div><a class="ico healthIco icos" href="">운동할 때</a></div>
+            </li>
+            <li>
+                <div><a class="ico sleepIco icos" href="">잠들기 전</a></div>
+            </li>
         </ul>
     </nav>
 </header>
 <main>
     <div class="bannerImg fcc">#전체 보기</div>
-    <div class="musicList">
-        
+    <div class="musicList" id="musicList">
+        <div class="wrap">
+            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                <button type="button" class="btn btn-outline-primary">최신순</button>
+                <button type="button" class="btn btn-outline-primary">좋아요순</button>
+
+            </div>
+            <button onclick="location.href = 'post.html'" type="button" class="btn btn-success">글쓰기버튼(임시)</button>
+
+        </div>
+
+        <div id="cards-box" class="row row-cols-1 row-cols-md-4 g-4">
+            <div class="col">
+                <div class="card">
+                    <a href="banner.html"> <img src="https://i.ytimg.com/vi/J79HVjqxejs/hq720.jpg"
+                                                class="card-img-top" width="300px" alt="..."> </a>
+
+                    <div class="card-body">
+                        <h5 class="card-title">제목 비올때 어쩌구</h5>
+                        <p class="card-text">코멘트</p>
+                        <p>좋아요수</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <a href="banner.html"> <img src="https://i.ytimg.com/vi/J79HVjqxejs/hq720.jpg"
+                                                class="card-img-top" width="300px" alt="..."> </a>
+
+                    <div class="card-body">
+                        <h5 class="card-title">제목 비올때 어쩌구</h5>
+                        <p class="card-text">코멘트</p>
+                        <p>좋아요수</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <a href="banner.html"> <img src="https://i.ytimg.com/vi/J79HVjqxejs/hq720.jpg"
+                                                class="card-img-top" width="300px" alt="..."> </a>
+
+                    <div class="card-body">
+                        <h5 class="card-title">제목 비올때 어쩌구</h5>
+                        <p class="card-text">코멘트</p>
+                        <p>좋아요수</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <a href="banner.html"> <img src="https://i.ytimg.com/vi/J79HVjqxejs/hq720.jpg"
+                                                class="card-img-top" width="300px" alt="..."> </a>
+
+                    <div class="card-body">
+                        <h5 class="card-title">제목 비올때 어쩌구</h5>
+                        <p class="card-text">코멘트</p>
+                        <p>좋아요수</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <a href="banner.html"> <img src="https://i.ytimg.com/vi/J79HVjqxejs/hq720.jpg"
+                                                class="card-img-top" width="300px" alt="..."> </a>
+
+                    <div class="card-body">
+                        <h5 class="card-title">제목 비올때 어쩌구</h5>
+                        <p class="card-text">코멘트</p>
+                        <p>좋아요수</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </main>
 </body>

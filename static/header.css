@@ -1,11 +1,11 @@
 /*공용*/
 * {
-    box-sizing: border-box;
+    box-sizing: border-box !important;
     margin: 0;
 }
 a {
     text-decoration: none;
-    color: inherit;
+    color: inherit !important;
 }
 li {list-style: none;}
 .fcc {
@@ -13,6 +13,7 @@ li {list-style: none;}
     justify-content: center;
     align-items: center;
 }
+.hide {display: none !important}
 header {
     position: fixed;
     top:0;
@@ -64,7 +65,7 @@ header {
     font-weight: bold;
 	color: #7e7e7e;
 }
-.loginArea > div:nth-child(2) > a {
+.loginArea > div > div:nth-child(2) > a {
     font-size: 15px;
     opacity: 0.5;
     margin-top: 15px;
@@ -95,9 +96,6 @@ main {margin-left: 300px;}
     font-size: 50px;
     font-weight: bold;
     color: white;
-}
-.musicList {
-
 }
 
 .musicList > .wrap {

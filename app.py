@@ -23,15 +23,11 @@ db = client.dbsparta
 
 @app.route('/')
 def home():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-
+    if(request.cookies.get('mytoken') == None):
         return render_template('index.html')
-    except jwt.ExpiredSignatureError:
-        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
-    except jwt.exceptions.DecodeError:
-        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+    else:
+        return render_template('index.html', successLogin='success')
+
 
 
 @app.route('/login')
@@ -56,7 +52,6 @@ def sign_in():
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
         return jsonify({'result': 'success', 'token': token})
-
     # 찾지 못하면
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
@@ -83,7 +78,16 @@ def check_dup():
 
 @app.route('/mypage')
 def mypage():
-    return render_template('mypage.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"username": payload["id"]})
+        print(user_info)
+        return render_template('mypage.html', user_info=user_info, successLogin='success')
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("/", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("/", msg="로그인 정보가 존재하지 않습니다."))
 
 @app.route('/update_profile', methods=['POST'])
 def save_img():

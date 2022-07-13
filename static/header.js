@@ -1,8 +1,10 @@
+msgCheck()
 $(document).ready(
     function animated() {
         for (i = 0; i < $('.icos').length; i++) {
             let target = $('.icos')[i]
-            let url = $(target).css('background-image').split('Melody')[1].split('.')[0]
+            let url = $(target).css('background-image').replace(/^url\(['"](.+)['"]\)/, '$1');
+            url = url.split(window.origin)[1].split('.')[0]
             target.addEventListener('mouseover', function move() {
                 let newUrl = '../' + url + '.gif'
                 $(target).css('background-image', 'url(' + newUrl + ')')
@@ -12,5 +14,14 @@ $(document).ready(
                 $(target).css('background-image', 'url(' + newUrl + ')')
             })
         }
-    }
+    },
+
 )
+
+function msgCheck() {
+    const url = new URL(window.location.href)
+    const urlParams = url.searchParams
+    if(urlParams.get('msg') != null) {
+        alert(urlParams.get('msg'))
+    }
+}

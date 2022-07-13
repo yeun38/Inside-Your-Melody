@@ -5,12 +5,17 @@
     <title>Inside Your Melody</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script type="text/javascript" src="../static/header.js"></script>
     <script type="text/javascript" src="../static/mypage.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <link href="../static/header.css" rel="stylesheet">
     <link href="../static/mypage.css" rel="stylesheet">
+
+    <!-- login 파일 -->
+    <script type="text/javascript" src="../static/login.js"></script>
+    <link href="../static/login.css" rel="stylesheet">
 </head>
 <body>
 <header>
@@ -18,9 +23,22 @@
         <a class="logoImg icos" href="/"></a>
     </div>
     <div class="loginArea fcc">
-        <div><a class="ico loginIco icos" href="">로그인</a></div>
-        <div><a href="">회원가입</a></div>
-        <div><a href="mypage">My Page</a></div>
+        {% if successLogin != 'success' %}
+            <div id="loginForm">
+                <div><a class="ico loginIco icos"
+                        onclick='$("#modal-login").addClass("is-active"), $("#modal-signup").removeClass("is-active")'>로그인</a>
+                </div>
+                <div class="fcc">
+                    <a onclick='$("#modal-signup").addClass("is-active"), $("#modal-login").removeClass("is-active")'>회원가입</a>
+                </div>
+            </div>
+        {% else %}
+            <div id="logoutForm">
+                <div><a class="ico loginIco icos" onclick="sign_out()">로그아웃</a>
+                </div>
+                <div class="fcc"><a href="mypage">My Page</a></div>
+            </div>
+        {% endif %}
     </div>
     <nav>
         <ul class="fcc">
@@ -46,22 +64,25 @@
     <div class="myProfile">
         <div class="fcc">
             <div class="fcc" style="flex-flow: column">
+                {% if user_info.profile_pic_real|length == 0 %}
                 <img class="profileImg"
                      src="https://item.kakaocdn.net/do/42993278d627d0139cd208cb73151c548f324a0b9c48f77dbce3a43bd11ce785">
-                <p class="profileFont">닉네임</p>
-                <div class="file has-name mp_hide">
-                    <label class="file-label" style="width:100%">
+                {% else %}
+                <img class="profileImg" src="{{ url_for('static', filename=user_info.profile_pic_real) }}">
+                {% endif %}
+                <p class="profileFont">{{ user_info.username }}</p>
+                <div class="file has-name is-boxed mp_hide">
+                    <label class="file-label"  style="height: 30px;">
                         <input id="input-pic" class="file-input" type="file"
                                name="resume">
-                        <span class="file-cta" style="height: 30px;">
+                        <span class="file-cta" style="padding: 0">
                             <span class="file-label">프로필 선택</span>
                         </span>
-{#                        <span id="file-name" class="file-name" style="width:100%;max-width:100%">{{ user_info.profile_pic }}</span>#}
                     </label>
                 </div>
             </div>
             <div style="width: 50%;">
-                <textarea placeholder="다른 사람에게 자신을 소개해요! (50자 이내)" disabled="true"></textarea>
+                <textarea placeholder="다른 사람에게 자신을 소개해요! (50자 이내)" disabled="true">{{ user_info.profile_info }}</textarea>
                 <div class="textareaCnt brandColorFont">(0 / 50)</div>
             </div>
             <nav class="level">

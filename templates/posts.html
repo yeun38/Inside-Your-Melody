@@ -8,35 +8,38 @@
     <link href="../static/header.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-<!--    <link href="{{ url_for('static', filename='posts.css') }}" rel="stylesheet">-->
     <link href="../static/posts.css" rel="stylesheet">
+    <script type="text/javascript" src="../static/posts.js"></script>
+
 </head>
 <body>
-    <header>
-        <div class="fcc">
-            <a class="logoImg icos" href=""></a>
-        </div>
-        <div class="loginArea fcc">
-            <div><a class="ico loginIco icos" href="">로그인</a></div>
-            <div><a href="">회원가입</a></div>
-        </div>
-        <nav>
-            <ul class="fcc">
-                <li><div><a class="ico viewAllIco icos" href="">전체 보기</a></div></li>
-                <li><div><a class="ico rainIco icos" href="">비오는 날</a></div></li>
-                <li><div><a class="ico studyIco icos" href="">공부할 때</a></div></li>
-                <li><div><a class="ico healthIco icos" href="">운동할 때</a></div></li>
-                <li><div><a class="ico sleepIco icos" href="">잠들기 전</a></div></li>
-            </ul>
-        </nav>
-    </header>
+{#    <header>#}
+{#        <div class="fcc">#}
+{#            <a class="logoImg icos" href=""></a>#}
+{#        </div>#}
+{#        <div class="loginArea fcc">#}
+{#            <div><a class="ico loginIco icos" href="">로그인</a></div>#}
+{#            <div><a href="">회원가입</a></div>#}
+{#        </div>#}
+{#        <nav>#}
+{#            <ul class="fcc">#}
+{#                <li><div><a class="ico viewAllIco icos" href="">전체 보기</a></div></li>#}
+{#                <li><div><a class="ico rainIco icos" href="">비오는 날</a></div></li>#}
+{#                <li><div><a class="ico studyIco icos" href="">공부할 때</a></div></li>#}
+{#                <li><div><a class="ico healthIco icos" href="">운동할 때</a></div></li>#}
+{#                <li><div><a class="ico sleepIco icos" href="">잠들기 전</a></div></li>#}
+{#            </ul>#}
+{#        </nav>#}
+{#    </header>#}
+
 
     <section class="section" >
         <div>
             <div class="posts-area">
-                <embed class="video" src="#" type="미디어 타입">
-                <div >좋아요</div>
-                <div class="posts-comment">코멘트 길이에 맞출지 고민</div>
+
+                <embed class="video" src="{{ list[0].url }}" type="미디어 타입">
+                <div>{{ list[0]["like"]}}</div>
+                <div class="posts-comment">{{ list[0].comment }}</div>
             </div>
         </div>
     </section>
@@ -46,20 +49,19 @@
             <article class="media">
                 <figure class="media-left" style="align-self: center">
                     <a class="image is-32x32" href="#">
-                        <img class="is-rounded" src="{{ url_for(" static",
-                        filename="profile_pics/profile_placeholder.png")
-                        }}">
+                        <img class="is-rounded" src="http://via.placeholder.com/32" alt="프로필">
                     </a>
                 </figure>
-                <div class="media-content">s
+                <div class="media-content">
                     <div class="field">
                         <p class="control">
-                            <input id="input-post" class="input is-rounded" placeholder="무슨 생각을 하고 계신가요?"
+                            <input id="input-reply" class="input is-rounded" placeholder="댓글을 달아주세요."
                                    onclick='$("#modal-post").addClass("is-active")'></p>
                     </div>
                 </div>
             </article>
         </section>
+
         <div class="modal " id="modal-post">
             <div class="modal-background" onclick='$("#modal-post").removeClass("is-active")'></div>
             <div class="modal-content">
@@ -69,7 +71,7 @@
                             <div class="field">
                                 <p class="control">
                                         <textarea id="textarea-post" class="textarea"
-                                                  placeholder="무슨 생각을 하고 계신가요?"></textarea>
+                                                  placeholder="댓글을 달아주세요."></textarea>
                                 </p>
                             </div>
                             <nav class="level is-mobile">
@@ -78,7 +80,7 @@
                                 </div>
                                 <div class="level-right">
                                     <div class="level-item">
-                                        <a class="button is-sparta" onclick="post()">포스팅하기</a>
+                                        <a class="button is-sparta" onclick="save_reply()">포스팅하기</a>
                                     </div>
                                     <div class="level-item">
                                         <a class="button is-sparta is-outlined"
@@ -99,9 +101,9 @@
                 <div class="box">
                     <article class="media">
                         <div class="media-left">
-                            <a class="image is-64x64" href="/user/{{ user_info.username }}">
+                            <a class="image is-64x64" href="#">
                                 <img class="is-rounded"
-                                     src={{ url_for({{ url_for('static', filename=user_info.profile_pic_real) }}>
+                                  src="http://via.placeholder.com/64">
                             </a>
                         </div>
                         <div class="media-content">
@@ -126,40 +128,11 @@
                         </div>
                     </article>
                 </div>
-                <div class="box">
-                    <article class="media">
-                        <div class="media-left">
-                            <a class="image is-64x64" href="/user/{{ user_info.username }}">
-                                <img class="is-rounded"
-                                     src={{ url_for({{ url_for('static', filename=user_info.profile_pic_real) }}>
-                            </a>
-                        </div>
-                        <div class="media-content">
-                            <div class="content">
-                                <p>
-                                    <strong>홍길동</strong> <small>@username</small> <small>10분 전</small>
-                                    <br>
-                                    글을 적는 칸
-                                </p>
-                            </div>
-                            <nav class="level is-mobile">
-                                <div class="level-left">
-                                    <a class="level-item is-sparta" aria-label="heart"
-                                       onclick="toggle_like('', 'heart')">
-                                        <span class="icon is-small"><i class="fa fa-heart"
-                                                                       aria-hidden="true"></i></span>&nbsp;<span
-                                            class="like-num">2.7k</span>
-                                    </a>
-                                </div>
-
-                            </nav>
-                        </div>
-                    </article>
-                </div>
-
             </div>
         </section>
+
     </section>
+    <button onclick="send()">ㅎㅇ</button>
 
 </body>
 </html>

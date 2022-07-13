@@ -27,7 +27,7 @@ def home():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 
-        return render_template('login.html')
+        return render_template('index.html')
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -37,7 +37,7 @@ def home():
 @app.route('/login')
 def login():
     msg = request.args.get("msg")
-    return render_template('login.html', msg=msg)
+    return render_template('index.html', msg=msg)
 
 @app.route('/sign_in', methods=['POST'])
 def sign_in():
@@ -68,8 +68,8 @@ def sign_up():
     password_receive = request.form['password_give']
     password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
     doc = {
-        "username": username_receive,  # 아이디
-        "password": password_hash  # 비밀번호
+        "username": username_receive,                               # 아이디
+        "password": password_hash                                   # 비밀번호
     }
     db.users.insert_one(doc)
     return jsonify({'result': 'success'})

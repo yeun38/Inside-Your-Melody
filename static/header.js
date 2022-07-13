@@ -1,3 +1,4 @@
+msgCheck()
 $(document).ready(
     function animated() {
         for (i = 0; i < $('.icos').length; i++) {
@@ -13,5 +14,14 @@ $(document).ready(
                 $(target).css('background-image', 'url(' + newUrl + ')')
             })
         }
-    }
+    },
+
 )
+
+function msgCheck() {
+    const url = new URL(window.location.href)
+    const urlParams = url.searchParams
+    if(urlParams.get('msg') != null) {
+        alert(urlParams.get('msg'))
+    }
+}

@@ -17,21 +17,29 @@
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-
 </head>
 <body>
 <header>
     <div class="fcc">
-        <a class="logoImg icos" href=""></a>
+        <a class="logoImg icos" href="/"></a>
     </div>
     <div id="loginArea" class="loginArea fcc">
-        <div id="signin-btn"><a class="ico loginIco icos"
-                                onclick='$("#modal-login").addClass("is-active"), $("#modal-signup").removeClass("is-active")'>로그인</a>
+        {% if successLogin != 'success' %}
+        <div id="loginForm">
+            <div><a class="ico loginIco icos"
+                    onclick='$("#modal-login").addClass("is-active"), $("#modal-signup").removeClass("is-active")'>로그인</a>
+            </div>
+            <div class="fcc">
+                <a onclick='$("#modal-signup").addClass("is-active"), $("#modal-login").removeClass("is-active")'>회원가입</a>
+            </div>
         </div>
-        <div id="deleteuser-btn"><a
-                onclick='$("#modal-signup").addClass("is-active"), $("#modal-login").removeClass("is-active")'>회원가입</a>
+        {% else %}
+        <div id="logoutForm">
+            <div><a class="ico loginIco icos" onclick="sign_out()">로그아웃</a>
+            </div>
+            <div class="fcc"><a href="mypage">My Page</a></div>
         </div>
-        {#        회원탈퇴 버튼에 효과주기 onclick='$("#modal-delete-user").addClass("is-active")' #}
+        {% endif %}
     </div>
     <nav>
         <ul class="fcc">
@@ -96,10 +104,11 @@
                                         </div>
                                         <div id="div-sign-in-or-up" class="has-text-centered">
                                             <nav class="level is-mobile">
-                                                <button class="level-item button is-sparta" onclick="sign_in()">
+                                                <button class="level-item button is-sparta login-modal-btn" onclick="sign_in()">
                                                     로그인
                                                 </button>
                                                 <hr>
+                                            </nav>
                                         </div>
                                     </div>
                                 </article>
@@ -133,8 +142,8 @@
                                                     <span class="icon is-small is-left"><i
                                                             class="fa fa-user"></i></span>
                                                 </div>
-                                                <div id="btn-check-dup" class="signup-modal-btn control">
-                                                    <button class="button is-sparta" onclick="check_dup()">중복확인</button>
+                                                <div id="btn-check-dup" class="control">
+                                                    <button class="button is-sparta signup-modal-btn" onclick="check_dup()">중복확인</button>
                                                 </div>
 
                                             </div>
@@ -168,7 +177,7 @@
                                             </div>
 
                                             <nav class="level is-mobile">
-                                                <button class="signup-modal-btn level-item button is-sparta" onclick="sign_up()">
+                                                <button class="level-item button is-sparta" onclick="sign_up()">
                                                     회원가입
                                                 </button>
                                             </nav>
@@ -187,73 +196,6 @@
     </div>
 </div>
 
-{#delete_user 모달구역#}
-<div class="modal" id="modal-delete-user">
-    <div class="modal-background" onclick='$("#modal-delete-user").removeClass("is-active")'></div>
-    <div class="modal-content">
-        <div class="box">
-            <article class="media">
-                <div class="media-content">
-                    {#회원탈퇴 기능#}
-                    <section class="section">
-                        <div class="container">
-                            <div class="box" style="max-width: 480px;margin:auto">
-                                <article class="media">
-                                    <div class="media-content">
-                                        <div class="content">
-                                            <div class="field has-addons">
-                                                <div class="control has-icons-left" style="width:100%">
-                                                    <input id="input-delete-username" class="input" type="text"
-                                                           placeholder="아이디">
-                                                    <span class="icon is-small is-left"><i
-                                                            class="fa fa-user"></i></span>
-                                                </div>
 
-                                            </div>
-                                            <p id="help-delete-id" class="help">아이디를 입력해주세요.</p>
-
-                                            <div class="field">
-                                                <div class="control has-icons-left">
-                                                    <input id="input-delete-password" class="input" type="password"
-                                                           placeholder="비밀번호">
-                                                    <span class="icon is-small is-left"><i
-                                                            class="fa fa-lock"></i></span>
-                                                </div>
-                                                <p id="help-delete-password" class="help">비밀번호를 입력해주세요.</p>
-                                            </div>
-                                        </div>
-
-                                        <div id="delete-user-box">
-                                            <div class="mb-5">
-                                                <div class="field">
-                                                    <div class="control has-icons-left" style="width:100%">
-                                                        <input id="input-delete-password2" class="input" type="password"
-                                                               placeholder="비밀번호 재입력">
-                                                        <span class="icon is-small is-left"><i
-                                                                class="fa fa-lock"></i></span>
-                                                    </div>
-                                                    <p id="help-delete-password2" class="help">비밀번호를 다시 한 번 입력해주세요.</p>
-                                                </div>
-                                            </div>
-
-                                            <nav class="level is-mobile">
-                                                <button class="delete-user-modal-btn level-item button is-sparta" onclick="delete_user()">
-                                                    회원탈퇴
-                                                </button>
-                                            </nav>
-                                        </div>
-
-
-                                    </div>
-                                </article>
-                            </div>
-
-                        </div>
-                    </section>
-                </div>
-            </article>
-        </div>
-    </div>
-</div>
 </body>
 </html>

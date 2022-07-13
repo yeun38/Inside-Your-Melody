@@ -123,7 +123,6 @@ function sign_in() {
         success: function (response) {
             if (response['result'] == 'success') {
                 $.cookie('mytoken', response['token'], {path: '/'});
-                $('#signin-btn').toggleClass("is-hidden")
                 window.location.replace("/")
             } else {
                 alert(response['msg'])
@@ -131,11 +130,11 @@ function sign_in() {
         }
     });
 }
-// 버튼에 붙이기
+
 function sign_out() {
     $.removeCookie('mytoken', {path: '/'});
     alert('로그아웃!')
-    window.location.href = "/login"
+    window.location.replace("/")
 }
 
 function delete_user() {
@@ -152,18 +151,18 @@ function delete_user() {
     }
 
     if (password == "") {
-        $("#help-password-delete").text("비밀번호를 재 입력해주세요.").removeClass("is-safe").addClass("is-danger")
-        $("#input-delte-password").focus()
+        $("#help-delete-password").text("비밀번호를 재 입력해주세요.").removeClass("is-safe").addClass("is-danger")
+        $("#input-delete-password").focus()
         return;
     } else {
-        $("#help-password-delete").text("")
+        $("#help-delete-password").text("")
     }
     if (password2 != password) {
-        $("#help-password2-delete").text("비밀번호를 재 입력해주세요.").removeClass("is-safe").addClass("is-danger")
-        $("#input-delte-password2").focus()
+        $("#help-delete-password2").text("비밀번호를 재 입력해주세요.").removeClass("is-safe").addClass("is-danger")
+        $("#input-delete-password2").focus()
         return;
     } else {
-        $("#help-password2-delete").text("")
+        $("#help-delete-password2").text("")
     }
 
     $.ajax({

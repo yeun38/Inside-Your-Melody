@@ -1,4 +1,3 @@
-from pymongo import MongoClient
 import jwt
 import datetime
 import hashlib
@@ -14,15 +13,15 @@ db = client.list
 
 # app.config["TEMPLATES_AUTO_RELOAD"] = True
 # app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
-# SECRET_KEY = 'SPARTA'
+SECRET_KEY = 'SPARTA'
 # import certifi
 # ca = certifi.where()
 
 
-@app.route('/')
-def home():
-    return render_template('index.html')
-
+# @app.route('/')
+# def home():
+#     return render_template('index.html')
+#
 #     token_receive = request.cookies.get('mytoken')
 #     try:
 #         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
@@ -87,9 +86,9 @@ def home():
 
 @app.route('/posts')
 def posts():
-    bucket_list = list(db.bucket.find({}, {'_id': False}))
+        bucket_list = list(db.bucket.find({}, {'_id': False}))
+        return render_template('posts.html', list=bucket_list)
 
-    return render_template("posts.html", list=bucket_list)
 
 
 @app.route('/reply', methods=['POST'])
@@ -99,13 +98,13 @@ def save_reply():
     #     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
     # user_info = db.users.find_one({"username": payload["id"]})
     comment_receive = request.form["comment_give"]
-    # date_receive = request.form["date_give"]
+    date_receive = request.form["date_give"]
     doc = {
         # "username": user_info["username"],
         # "profile_name": user_info["profile_name"],
         # "profile_pic_real": user_info["profile_pic_real"],
         "comment": comment_receive,
-        # "date": date_receive
+        "date": date_receive
         }
     db.list.insert_one(doc)
     return jsonify({"result": "success", 'msg': 'reply succese'})
@@ -118,10 +117,11 @@ def show_reply():
     # token_receive = request.cookies.get('mytoken')
     # try:
     #     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-    #     replys = list(db.replys.find({}).sort("date", -1).limit(10))
-    reply_list = list(db.list.find({}, {'_id': False}))
+    replys = list(db.list.find({}).sort("date", -1).limit(10))
+    for reply in replys:
+        reply["_id"] = str(reply["_id"])
 
-    return jsonify({'reply_list':reply_list})
+    return jsonify({"result": "success","msg":"포스팅을 가져왔습니다.", "replys":replys})
 
 # @app.route('/update_like', methods=['POST'])
 # def update_like():

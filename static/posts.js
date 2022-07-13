@@ -62,7 +62,7 @@ function show_reply() {
                                             <div class="media-content">
                                                 <div class="content">
                                                     <p>
-                                                        <strong>홍길동</strong> <small>@username</small> <small>${time_before}</small>
+                                                        <strong>홍길동</strong> <small>@${reply['username']}</small> <small>${time_before}</small>
                                                         <br>
                                                             ${reply['comment']}
                                                     </p>
@@ -105,5 +105,7 @@ function send(){
                 }
             });
         }
+
+
 
 

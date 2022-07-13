@@ -6,6 +6,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="../static/header.js"></script>
     <link href="../static/header.css" rel="stylesheet">
+
+    <!-- login 파일 -->
+    <script type="text/javascript" src="../static/login.js"></script>
+    <link href="../static/login.css" rel="stylesheet">
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
 </head>
 <body>
 <header>
@@ -13,8 +25,8 @@
         <a class="logoImg icos" href=""></a>
     </div>
     <div class="loginArea fcc">
-        <div><a class="ico loginIco icos" href="">로그인</a></div>
-        <div><a href="">회원가입</a></div>
+        <div><a class="ico loginIco icos" onclick='$("#modal-login").addClass("is-active")'>로그인</a></div>
+        <div><a onclick='$("#modal-signup").addClass("is-active")'>회원가입</a></div>
     </div>
     <nav>
         <ul class="fcc">
@@ -29,8 +41,137 @@
 <main>
     <div class="bannerImg fcc">#전체 보기</div>
     <div class="musicList">
-        
+
     </div>
 </main>
+
+{#login 모달구역#}
+<div class="modal" id="modal-login">
+    <div class="modal-background" onclick='$("#modal-login").removeClass("is-active")'></div>
+    <div class="modal-content">
+        <div class="box">
+            <article class="media">
+                <div class="media-content">
+                    {#로그인 기능#}
+                    <section class="section">
+                        <div class="container">
+                            <div class="box" style="max-width: 480px;margin:auto">
+                                <article class="media">
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <div class="field has-addons">
+                                                <div class="control has-icons-left" style="width:100%">
+                                                    <input id="input-login-username" class="input" type="text"
+                                                           placeholder="아이디">
+                                                    <span class="icon is-small is-left"><i
+                                                            class="fa fa-user"></i></span>
+                                                </div>
+                                            </div>
+                                            <p id="help-id" class="help"></p>
+                                            <p id="help-id-login" class="help is-danger"></p>
+                                            <div class="field">
+                                                <div class="control has-icons-left">
+                                                    <input id="input-login-password" class="input" type="password"
+                                                           placeholder="비밀번호">
+                                                    <span class="icon is-small is-left"><i
+                                                            class="fa fa-lock"></i></span>
+                                                </div>
+                                                <p id="help-password" class="help"></p>
+                                            </div>
+                                        </div>
+                                        <div id="div-sign-in-or-up" class="has-text-centered">
+                                            <nav class="level is-mobile">
+                                                <button class="level-item button is-sparta" onclick="sign_in()">
+                                                    로그인
+                                                </button>
+                                                <hr>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </article>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"
+            onclick='$("#modal-signup").removeClass("is-active")'></button>
+</div>
+
+{#signup 모달구역#}
+<div class="modal" id="modal-signup">
+    <div class="modal-background" onclick='$("#modal-signup").removeClass("is-active")'></div>
+    <div class="modal-content">
+        <div class="box">
+            <article class="media">
+                <div class="media-content">
+                    {#회원가입 기능#}
+                    <section class="section">
+                        <div class="container">
+                            <div class="box" style="max-width: 480px;margin:auto">
+                                <article class="media">
+                                    <div class="media-content">
+                                        <div class="content">
+                                            <div class="field has-addons">
+                                                <div class="control has-icons-left" style="width:100%">
+                                                    <input id="input-signup-username" class="input" type="text"
+                                                           placeholder="아이디">
+                                                    <span class="icon is-small is-left"><i
+                                                            class="fa fa-user"></i></span>
+                                                </div>
+                                                <div id="btn-check-dup" class="control">
+                                                    <button class="button is-sparta" onclick="check_dup()">중복확인</button>
+                                                </div>
+
+                                            </div>
+                                            <p id="help-signup-id" class="help">아이디는 2-10자의 영문과 숫자와 일부 특수문자(._-)만 입력 가능합니다.</p>
+
+                                            <div class="field">
+                                                <div class="control has-icons-left">
+                                                    <input id="input-signup-password" class="input" type="password"
+                                                           placeholder="비밀번호">
+                                                    <span class="icon is-small is-left"><i
+                                                            class="fa fa-lock"></i></span>
+                                                </div>
+                                                <p id="help-signup-password" class="help">영문과 숫자 조합의 8-20자의 비밀번호를 설정해주세요.
+                                                    특수문자(!@#$%^&*)도 사용 가능합니다.</p>
+                                            </div>
+                                        </div>
+
+                                        <div id="sign-up-box">
+                                            <div class="mb-5">
+                                                <div class="field">
+                                                    <div class="control has-icons-left" style="width:100%">
+                                                        <input id="input-signup-password2" class="input" type="password"
+                                                               placeholder="비밀번호 재입력">
+                                                        <span class="icon is-small is-left"><i
+                                                                class="fa fa-lock"></i></span>
+                                                    </div>
+                                                    <p id="help-signup-password2" class="help">비밀번호를 다시 한 번 입력해주세요.</p>
+                                                </div>
+                                            </div>
+
+                                            <nav class="level is-mobile">
+                                                <button class="level-item button is-sparta" onclick="sign_up()">
+                                                    회원가입
+                                                </button>
+                                            </nav>
+                                        </div>
+
+
+                                    </div>
+                                </article>
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+            </article>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"
+            onclick='$("#modal-signup").removeClass("is-active")'></button>
+</div>
 </body>
 </html>

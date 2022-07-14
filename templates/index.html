@@ -22,8 +22,10 @@
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+
 </head>
 <body>
 <header>
@@ -51,44 +53,40 @@
     <nav>
         <ul class="fcc">
             <li>
-                <div><a class="ico viewAllIco icos" href="">전체 보기</a></div>
+                <div><a class="ico viewAllIco icos" href="/">전체 보기</a></div>
             </li>
             <li>
-                <div><a class="ico rainIco icos" href="">비오는 날</a></div>
+                <div><a class="ico rainIco icos" href="#" onclick="show_musics(1)">비오는 날</a></div>
             </li>
             <li>
-                <div><a class="ico studyIco icos" href="">공부할 때</a></div>
+                <div><a class="ico studyIco icos" href="#" onclick="show_musics(2)">공부할 때</a></div>
             </li>
             <li>
-                <div><a class="ico healthIco icos" href="">운동할 때</a></div>
+                <div><a class="ico healthIco icos" href="#" onclick="show_musics(3)">운동할 때</a></div>
             </li>
             <li>
-                <div><a class="ico sleepIco icos" href="">잠들기 전</a></div>
+                <div><a class="ico sleepIco icos" href="#" onclick="show_musics(4)">잠들기 전</a></div>
             </li>
         </ul>
     </nav>
 </header>
 <main>
-    <div class="bannerImg fcc">#전체 보기</div>
+    <div class="bannerImg fcc"></div>
     <div class="musicList" id="musicList">
         <div class="wrap">
-            <div class="wrap3">
-                <div class="btn-group" role="group" aria-label="Basic outlined example">
-                    <button type="button" class="btn btn-outline-primary">최신순</button>
-                    <button type="button" class="btn btn-outline-primary">좋아요순</button>
-
-                </div>
-                <a href='post'>
-                    <button type="button" class="btn btn-success"> 글쓰기버튼(임시)</button>
-                </a>
+            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                <button type="button" class="btn btn-outline-primary">최신순</button>
+                <button type="button" class="btn btn-outline-primary">좋아요순</button>
             </div>
+            {% if successLogin == 'success' %}
+                <a href='post'>
+                    <button type="button" class="btn btn-success"> 글쓰기버튼</button>
+                </a>
+            {% endif %}
             <div id="cards-box" class="row row-cols-1 row-cols-md-4 g-4">
 
             </div>
-
         </div>
-
-
     </div>
 </main>
 
@@ -115,7 +113,7 @@
                                                 </div>
                                             </div>
                                             <p id="help-id" class="help"></p>
-                                            <p id="help-id-login" class="help is-danger"></p>
+                                            <p id="help-login-id" class="help is-danger"></p>
                                             <div class="field">
                                                 <div class="control has-icons-left">
                                                     <input id="input-login-password" class="input" type="password"
@@ -123,12 +121,13 @@
                                                     <span class="icon is-small is-left"><i
                                                             class="fa fa-lock"></i></span>
                                                 </div>
-                                                <p id="help-password" class="help"></p>
+                                                <p id="help-login-password" class="help"></p>
                                             </div>
                                         </div>
                                         <div id="div-sign-in-or-up" class="has-text-centered">
                                             <nav class="level is-mobile">
-                                                <button class="level-item button is-sparta" onclick="sign_in()">
+                                                <button class="level-item button is-sparta login-modal-btn"
+                                                        onclick="sign_in()">
                                                     로그인
                                                 </button>
                                                 <hr>
@@ -143,8 +142,6 @@
             </article>
         </div>
     </div>
-    <button class="modal-close is-large" aria-label="close"
-            onclick='$("#modal-signup").removeClass("is-active")'></button>
 </div>
 
 {#signup 모달구역#}
@@ -169,7 +166,9 @@
                                                             class="fa fa-user"></i></span>
                                                 </div>
                                                 <div id="btn-check-dup" class="control">
-                                                    <button class="button is-sparta" onclick="check_dup()">중복확인</button>
+                                                    <button class="button is-sparta signup-modal-btn"
+                                                            onclick="check_dup()">중복확인
+                                                    </button>
                                                 </div>
 
                                             </div>
@@ -209,76 +208,6 @@
                                             </nav>
                                         </div>
 
-
-                                    </div>
-                                </article>
-                            </div>
-
-                        </div>
-                    </section>
-                </div>
-            </article>
-        </div>
-    </div>
-    <button class="modal-close is-large" aria-label="close"
-            onclick='$("#modal-signup").removeClass("is-active")'></button>
-</div>
-
-{#delete_user 모달구역#}
-<div class="modal" id="modal-delete-user">
-    <div class="modal-background" onclick='$("#modal-delete-user").removeClass("is-active")'></div>
-    <div class="modal-content">
-        <div class="box">
-            <article class="media">
-                <div class="media-content">
-                    {#회원탈퇴 기능#}
-                    <section class="section">
-                        <div class="container">
-                            <div class="box" style="max-width: 480px;margin:auto">
-                                <article class="media">
-                                    <div class="media-content">
-                                        <div class="content">
-                                            <div class="field has-addons">
-                                                <div class="control has-icons-left" style="width:100%">
-                                                    <input id="input-delete-username" class="input" type="text"
-                                                           placeholder="아이디">
-                                                    <span class="icon is-small is-left"><i
-                                                            class="fa fa-user"></i></span>
-                                                </div>
-
-                                            </div>
-                                            <p id="help-delete-id" class="help">아이디를 입력해주세요.</p>
-
-                                            <div class="field">
-                                                <div class="control has-icons-left">
-                                                    <input id="input-delete-password" class="input" type="password"
-                                                           placeholder="비밀번호">
-                                                    <span class="icon is-small is-left"><i
-                                                            class="fa fa-lock"></i></span>
-                                                </div>
-                                                <p id="help-delete-password" class="help">비밀번호를 입력해주세요.</p>
-                                            </div>
-                                        </div>
-
-                                        <div id="delete-user-box">
-                                            <div class="mb-5">
-                                                <div class="field">
-                                                    <div class="control has-icons-left" style="width:100%">
-                                                        <input id="input-delete-password2" class="input" type="password"
-                                                               placeholder="비밀번호 재입력">
-                                                        <span class="icon is-small is-left"><i
-                                                                class="fa fa-lock"></i></span>
-                                                    </div>
-                                                    <p id="help-delete-password2" class="help">비밀번호를 다시 한 번 입력해주세요.</p>
-                                                </div>
-                                            </div>
-
-                                            <nav class="level is-mobile">
-                                                <button class="level-item button is-sparta" onclick="delete_user()">
-                                                    회원탈퇴
-                                                </button>
-                                            </nav>
-                                        </div>
                                     </div>
                                 </article>
                             </div>

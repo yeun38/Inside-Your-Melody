@@ -4,25 +4,38 @@
     <meta charset="UTF-8">
     <title>Inside Your Melody</title>
 
+        <!-- css 링크 -->
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <link href="../static/header.css" rel="stylesheet">
+    <link href="../static/login.css" rel="stylesheet">
+    <link href="../static/mypage.css" rel="stylesheet">
+    <link href="../static/posts.css" rel="stylesheet">
+
+
+    <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
     <script type="text/javascript" src="../static/header.js"></script>
-    <script type="text/javascript" src="../static/mypage.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <link href="../static/header.css" rel="stylesheet">
-    <link href="../static/mypage.css" rel="stylesheet">
-
-    <!-- login 파일 -->
     <script type="text/javascript" src="../static/login.js"></script>
-    <link href="../static/login.css" rel="stylesheet">
+    <script type="text/javascript" src="../static/mypage.js"></script>
+    <script type="text/javascript" src="../static/posts.js"></script>
 </head>
 <body>
 <header>
     <div class="fcc">
-        <a class="logoImg icos" href="/"></a>
+        <a class="logoImg icos" href="../"></a>
     </div>
-    <div class="loginArea fcc">
+    <div id="loginArea" class="loginArea fcc">
         {% if successLogin != 'success' %}
             <div id="loginForm">
                 <div><a class="ico loginIco icos"
@@ -43,19 +56,19 @@
     <nav>
         <ul class="fcc">
             <li>
-                <div><a class="ico viewAllIco icos" href="">전체 보기</a></div>
+                <div><a class="ico viewAllIco icos" href="../">전체 보기</a></div>
             </li>
             <li>
-                <div><a class="ico rainIco icos" href="">비오는 날</a></div>
+                <div><a class="ico rainIco icos" href="../" onclick="show_musics(1)">비오는 날</a></div>
             </li>
             <li>
-                <div><a class="ico studyIco icos" href="">공부할 때</a></div>
+                <div><a class="ico studyIco icos" href="../" onclick="show_musics(2)">공부할 때</a></div>
             </li>
             <li>
-                <div><a class="ico healthIco icos" href="">운동할 때</a></div>
+                <div><a class="ico healthIco icos" href="../" onclick="show_musics(3)">운동할 때</a></div>
             </li>
             <li>
-                <div><a class="ico sleepIco icos" href="">잠들기 전</a></div>
+                <div><a class="ico sleepIco icos" href="../" onclick="show_musics(4)">잠들기 전</a></div>
             </li>
         </ul>
     </nav>
@@ -87,16 +100,10 @@
             </div>
             <nav class="level">
                 <div class="level-item has-text-centered">
-                    <div>
-                        <p class="heading">포스팅</p>
-                        <p class="title">100</p>
-                    </div>
-                </div>
-                <div class="level-item has-text-centered">
-                    <div>
-                        <p class="heading">좋아요</p>
-                        <p class="title">100</p>
-                    </div>
+{#                    <div>#}
+{#                        <p class="heading">포스팅</p>#}
+{#                        <p class="title">100</p>#}
+{#                    </div>#}
                 </div>
             </nav>
         </div>

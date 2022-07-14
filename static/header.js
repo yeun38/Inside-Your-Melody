@@ -88,21 +88,18 @@ function show_musics(category) {
                 let url = rows[i]['url']
                 let comment = rows[i]['comment']
                 let like = rows[i]['like']
+                let aa = url.split('/', 4)[3]
                 let temp_html = `<div class="col">
                                             <div class="card">
-                                              
-                                                <a href="posts.html"> <img src="https://i.ytimg.com/vi_webp/${aa}/maxresdefault.webp"
+                                                <a href="posts/${rows[i]['board_index']}?aa=${aa}"> <img src="https://i.ytimg.com/vi_webp/${aa}/maxresdefault.webp"
                                                                             class="card-img-top" width="300px" alt="..."> </a>
-                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/${aa}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                                <div class="card-body">
-                                                    <h5 class="card-title">${url}</h5>
-                                                    <p class="card-text">${comment}</p>
-                                                    <div class ="wrap2">
-                                                        <span class="material-symbols-outlined">favorite</span>
-                                                        <p class="like">${like}</p>
+                                                    <div class="card-body">
+                                                        <p class="card-text">${comment}</p>
+                                                        <span>
+                                                            <span class="material-symbols-outlined">조회수: </span>
+                                                            <span class="like">${like}회</span>
+                                                        </span>
                                                     </div>
-
-                                                </div>
                                                  </a>
                                             </div>
                                         </div>`

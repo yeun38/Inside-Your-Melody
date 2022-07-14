@@ -17,7 +17,7 @@ function save_reply(){
         }
 
 $(document).ready(function () {
-            // show_reply();
+            show_reply();
         });
 
 function time2str(date) {
@@ -72,10 +72,9 @@ function show_reply() {
                                                 <nav class="level is-mobile">
                                                     <div class="level-left">
                                                         <a class="level-item is-sparta" aria-label="heart"
-                                                           onclick="toggle_like('${reply["_id"]}', 'heart')">
-                                                            <span class="icon is-small"><i class="fa ${class_heart}" aria-hidden="true"></i></span>
-                                                                &nbsp;
-                                                                <span class="like-num">${count_heart}</span>
+                                                           onclick="toggle_like('${reply["_id"]}', 'heart')" style="margin: 0">
+                                                            <span class="icon is-small"><strong style="color: red;">♥</strong></span>
+                                                            <span class="like-num">${count_heart}</span>
                                                         </a>
                                                     </div>
                 
@@ -147,3 +146,16 @@ function toggle_like(post_id, type) {
     }
 }
 
+function getParam() {
+    const url = new URL(window.location.href)
+    const urlParams = url.searchParams
+    const aa = urlParams.get('aa')
+
+    $('#video').attr('src', `https://www.youtube.com/embed/${aa}`)
+}
+
+function getTime(wt) {
+    let time_post = new Date(wt)
+    let time_before = time2str(time_post)
+    $('#wt').text('게시일: ' + `${time_before}`)
+}

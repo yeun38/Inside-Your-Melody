@@ -2,6 +2,7 @@
 * {
     box-sizing: border-box !important;
     margin: 0;
+    font-family: 'Nanum Pen Script', cursive !important;
 }
 a {
     text-decoration: none;

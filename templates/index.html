@@ -22,8 +22,10 @@
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+
 </head>
 <body>
 <header>
@@ -77,9 +79,9 @@
                 <button type="button" class="btn btn-outline-primary">좋아요순</button>
             </div>
             {% if successLogin == 'success' %}
-            <a href='post'>
-                <button type="button" class="btn btn-success"> 글쓰기버튼</button>
-            </a>
+                <a href='post'>
+                    <button type="button" class="btn btn-success"> 글쓰기버튼</button>
+                </a>
             {% endif %}
             <div id="cards-box" class="row row-cols-1 row-cols-md-4 g-4">
 
@@ -124,7 +126,8 @@
                                         </div>
                                         <div id="div-sign-in-or-up" class="has-text-centered">
                                             <nav class="level is-mobile">
-                                                <button class="level-item button is-sparta login-modal-btn" onclick="sign_in()">
+                                                <button class="level-item button is-sparta login-modal-btn"
+                                                        onclick="sign_in()">
                                                     로그인
                                                 </button>
                                                 <hr>
@@ -163,7 +166,9 @@
                                                             class="fa fa-user"></i></span>
                                                 </div>
                                                 <div id="btn-check-dup" class="control">
-                                                    <button class="button is-sparta signup-modal-btn" onclick="check_dup()">중복확인</button>
+                                                    <button class="button is-sparta signup-modal-btn"
+                                                            onclick="check_dup()">중복확인
+                                                    </button>
                                                 </div>
 
                                             </div>

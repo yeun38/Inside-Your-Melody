@@ -151,7 +151,6 @@ def show_reply():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.users.find_one({"username": payload["id"]})
         replys = list(db.list.find({}).sort("date", -1).limit(10))
         for reply in replys:
             reply["_id"] = str(reply["_id"])
@@ -167,7 +166,7 @@ def update_like():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.users.find_one({"username": payload["id"]})
+        user_info = db.users.find_one({"username": payload["id"]}) # 포스트id
         post_id_receive = request.form["post_id_give"]
         type_receive = request.form["type_give"]
         action_receive = request.form["action_give"]
@@ -180,8 +179,7 @@ def update_like():
             db.likes.insert_one(doc)
         else:
             db.likes.delete_one(doc)
-        count = db.likes.count_documents({"post_id": post_id_receive, "type": type_receive})
-
+        count = db.likes.count_documents({"post_id": post_id_receive, "type" : type_receive})
         return jsonify({"result": "success", 'msg': 'updated', "count": count})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))

@@ -23,11 +23,11 @@ $(document).ready(function () {
 function post(username) {
     let url = $('#url').val()
     let category = $('#category').val()
-    if (url == '' || category == '--선택하기--') {
-        alert('URL 입력 혹은 카테고리를 선택해주세요')
+    let comment = $('#comment').val()
+    if (url == '' || category == '--선택하기--' || comment == '') {
+        alert('URL, 코멘트 입력 혹은 카테고리를 선택해주세요')
         return
     }
-    let comment = $('#comment').val()
     let today = new Date().toISOString()
     $.ajax({
         type: 'POST',

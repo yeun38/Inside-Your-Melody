@@ -46,11 +46,14 @@ function post(username) {
     });
 }
 
-function show_musics() {
+function show_musics(category) {
+    if(category == undefined) {
+        category = 0
+    }
     $('#cards-box').empty()
     $.ajax({
         type: 'GET',
-        url: '/musics',
+        url: `/musics/${category}`,
         data: {},
         success: function (response) {
             let rows = response['musics']

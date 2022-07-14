@@ -17,7 +17,7 @@ function save_reply(){
         }
 
 $(document).ready(function () {
-            show_reply();
+            // show_reply();
         });
 
 function time2str(date) {

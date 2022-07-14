@@ -15,7 +15,6 @@ ca = certifi.where()
 client = MongoClient('mongodb+srv://test:sparta@cluster0.ny500iw.mongodb.net/Cluster0?retryWrites=true&w=majority')
 # client = MongoClient('mongodb+srv://test:sparta@cluster0.d7gym6j.mongodb.net/Cluster0?retryWrites=true&w=majority',
 #                      tlsCAFile=ca)
-client = MongoClient('mongodb+srv://narcis1205:1205@narcis1205.j99xn.mongodb.net/project0?retryWrites=true&w=majority')
 db = client.dbsparta
 
 @app.route("/post", methods=["GET"])    #index.html에서 게시글작성 버튼 누르면 onclick 발동되면서 이 요청에 걸림.
@@ -171,15 +170,15 @@ def delete_user():
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
-@app.route('/posts')
-def posts():
+@app.route('/posts/<boardindex>')
+def posts(boardindex):
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
-        bucket_list = list(db.bucket.find({}, {'_id': False}))
+        post_index = db.musics.find_one({"board_index": boardindex}, {'_id': False})
 
-        return render_template('posts.html', list=bucket_list,user_info=user_info)
+        return render_template('posts.html',user_info=user_info, post_index=post_index)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 

@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Inside Your Melody</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="../static/header.js"></script>
     <link href="../static/header.css" rel="stylesheet">
@@ -17,6 +22,8 @@
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
 </head>
 <body>
 <header>
@@ -25,20 +32,20 @@
     </div>
     <div id="loginArea" class="loginArea fcc">
         {% if successLogin != 'success' %}
-        <div id="loginForm">
-            <div><a class="ico loginIco icos"
-                    onclick='$("#modal-login").addClass("is-active"), $("#modal-signup").removeClass("is-active")'>로그인</a>
+            <div id="loginForm">
+                <div><a class="ico loginIco icos"
+                        onclick='$("#modal-login").addClass("is-active"), $("#modal-signup").removeClass("is-active")'>로그인</a>
+                </div>
+                <div class="fcc">
+                    <a onclick='$("#modal-signup").addClass("is-active"), $("#modal-login").removeClass("is-active")'>회원가입</a>
+                </div>
             </div>
-            <div class="fcc">
-                <a onclick='$("#modal-signup").addClass("is-active"), $("#modal-login").removeClass("is-active")'>회원가입</a>
-            </div>
-        </div>
         {% else %}
-        <div id="logoutForm">
-            <div><a class="ico loginIco icos" onclick="sign_out()">로그아웃</a>
+            <div id="logoutForm">
+                <div><a class="ico loginIco icos" onclick="sign_out()">로그아웃</a>
+                </div>
+                <div class="fcc"><a href="mypage">My Page</a></div>
             </div>
-            <div class="fcc"><a href="mypage">My Page</a></div>
-        </div>
         {% endif %}
     </div>
     <nav>
@@ -62,9 +69,22 @@
     </nav>
 </header>
 <main>
-    <div class="bannerImg fcc">#전체 보기</div>
-    <div class="musicList">
+    <div class="bannerImg bannerTotal fcc">#전체 보기</div>
+    <div class="musicList" id="musicList">
+        <div class="wrap">
+            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                <button type="button" class="btn btn-outline-primary">최신순</button>
+                <button type="button" class="btn btn-outline-primary">좋아요순</button>
+            </div>
+            {% if successLogin == 'success' %}
+            <a href='post'>
+                <button type="button" class="btn btn-success"> 글쓰기버튼</button>
+            </a>
+            {% endif %}
+            <div id="cards-box" class="row row-cols-1 row-cols-md-4 g-4">
 
+            </div>
+        </div>
     </div>
 </main>
 
@@ -91,7 +111,7 @@
                                                 </div>
                                             </div>
                                             <p id="help-id" class="help"></p>
-                                            <p id="help-id-login" class="help is-danger"></p>
+                                            <p id="help-login-id" class="help is-danger"></p>
                                             <div class="field">
                                                 <div class="control has-icons-left">
                                                     <input id="input-login-password" class="input" type="password"
@@ -99,12 +119,12 @@
                                                     <span class="icon is-small is-left"><i
                                                             class="fa fa-lock"></i></span>
                                                 </div>
-                                                <p id="help-password" class="help"></p>
+                                                <p id="help-login-password" class="help"></p>
                                             </div>
                                         </div>
                                         <div id="div-sign-in-or-up" class="has-text-centered">
                                             <nav class="level is-mobile">
-                                                <button class="level-item button is-sparta" onclick="sign_in()">
+                                                <button class="level-item button is-sparta login-modal-btn" onclick="sign_in()">
                                                     로그인
                                                 </button>
                                                 <hr>
@@ -119,8 +139,6 @@
             </article>
         </div>
     </div>
-    <button class="modal-close is-large" aria-label="close"
-            onclick='$("#modal-signup").removeClass("is-active")'></button>
 </div>
 
 {#signup 모달구역#}
@@ -145,7 +163,7 @@
                                                             class="fa fa-user"></i></span>
                                                 </div>
                                                 <div id="btn-check-dup" class="control">
-                                                    <button class="button is-sparta" onclick="check_dup()">중복확인</button>
+                                                    <button class="button is-sparta signup-modal-btn" onclick="check_dup()">중복확인</button>
                                                 </div>
 
                                             </div>
@@ -185,76 +203,6 @@
                                             </nav>
                                         </div>
 
-
-                                    </div>
-                                </article>
-                            </div>
-
-                        </div>
-                    </section>
-                </div>
-            </article>
-        </div>
-    </div>
-    <button class="modal-close is-large" aria-label="close"
-            onclick='$("#modal-signup").removeClass("is-active")'></button>
-</div>
-
-{#delete_user 모달구역#}
-<div class="modal" id="modal-delete-user">
-    <div class="modal-background" onclick='$("#modal-delete-user").removeClass("is-active")'></div>
-    <div class="modal-content">
-        <div class="box">
-            <article class="media">
-                <div class="media-content">
-                    {#회원탈퇴 기능#}
-                    <section class="section">
-                        <div class="container">
-                            <div class="box" style="max-width: 480px;margin:auto">
-                                <article class="media">
-                                    <div class="media-content">
-                                        <div class="content">
-                                            <div class="field has-addons">
-                                                <div class="control has-icons-left" style="width:100%">
-                                                    <input id="input-delete-username" class="input" type="text"
-                                                           placeholder="아이디">
-                                                    <span class="icon is-small is-left"><i
-                                                            class="fa fa-user"></i></span>
-                                                </div>
-
-                                            </div>
-                                            <p id="help-delete-id" class="help">아이디를 입력해주세요.</p>
-
-                                            <div class="field">
-                                                <div class="control has-icons-left">
-                                                    <input id="input-delete-password" class="input" type="password"
-                                                           placeholder="비밀번호">
-                                                    <span class="icon is-small is-left"><i
-                                                            class="fa fa-lock"></i></span>
-                                                </div>
-                                                <p id="help-delete-password" class="help">비밀번호를 입력해주세요.</p>
-                                            </div>
-                                        </div>
-
-                                        <div id="delete-user-box">
-                                            <div class="mb-5">
-                                                <div class="field">
-                                                    <div class="control has-icons-left" style="width:100%">
-                                                        <input id="input-delete-password2" class="input" type="password"
-                                                               placeholder="비밀번호 재입력">
-                                                        <span class="icon is-small is-left"><i
-                                                                class="fa fa-lock"></i></span>
-                                                    </div>
-                                                    <p id="help-delete-password2" class="help">비밀번호를 다시 한 번 입력해주세요.</p>
-                                                </div>
-                                            </div>
-
-                                            <nav class="level is-mobile">
-                                                <button class="level-item button is-sparta" onclick="delete_user()">
-                                                    회원탈퇴
-                                                </button>
-                                            </nav>
-                                        </div>
                                     </div>
                                 </article>
                             </div>

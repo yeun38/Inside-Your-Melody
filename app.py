@@ -59,9 +59,9 @@ def web_post_post():
 @app.route("/musics/<category>", methods=["GET"])
 def musics_get(category):
     if category == '0':
-        music_list = list(db.musics.find({},{'_id': False}).sort("date", -1).limit(20))
+        music_list = list(db.musics.find({},{'_id': False}).sort("write_time", -1).limit(20))
     else:
-        music_list = list(db.musics.find({"category": category}, {'_id': False}).sort("date", -1).limit(20))
+        music_list = list(db.musics.find({"category": category}, {'_id': False}).sort("write_time", -1).limit(20))
     return jsonify({'musics':music_list})
 
 @app.route('/')

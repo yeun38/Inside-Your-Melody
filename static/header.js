@@ -47,8 +47,35 @@ function post(username) {
 }
 
 function show_musics(category) {
-    if(category == undefined) {
+    if (category == undefined) {
         category = 0
+    }
+    switch (category) {
+        case 0 :
+            removeBan()
+            $('.bannerImg').addClass('bannerTotal')
+            $('.bannerImg').text('#전체보기')
+            break
+        case 1 :
+            removeBan()
+            $('.bannerImg').addClass('bannerRain')
+            $('.bannerImg').text('#비오는 날')
+            break
+        case 2 :
+            removeBan()
+            $('.bannerImg').addClass('bannerStudy')
+            $('.bannerImg').text('#공부할 때')
+            break
+        case 3 :
+            removeBan()
+            $('.bannerImg').addClass('bannerHealth')
+            $('.bannerImg').text('#운동할 때')
+            break
+        case 4 :
+            removeBan()
+            $('.bannerImg').addClass('bannerSleep')
+            $('.bannerImg').text('#잠들기 전')
+            break
     }
     $('#cards-box').empty()
     $.ajax({
@@ -87,3 +114,10 @@ function msgCheck() {
     }
 }
 
+function removeBan() {
+    $('.bannerImg').removeClass('bannerTotal')
+    $('.bannerImg').removeClass('bannerRain')
+    $('.bannerImg').removeClass('bannerStudy')
+    $('.bannerImg').removeClass('bannerHealth')
+    $('.bannerImg').removeClass('bannerSleep')
+}

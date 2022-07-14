@@ -94,10 +94,9 @@ main {margin-left: 300px;}
 
     font-size: 50px;
     font-weight: bold;
-    color: white;
 }
 .bannerPost {
-     background-color: rgb(97, 65, 172);
+     background-color: rgb(97, 65, 172) !important;
 }
 .bannerPost > img {
     width: 250px;
@@ -105,8 +104,24 @@ main {margin-left: 300px;}
 }
 .bannerTotal {
     background-image: url("./img/banner1.jpg");
+    color: white;
 }
-
+.bannerRain {
+    background-image: url("./img/banner2.jpg");
+    color: cornflowerblue;
+}
+.bannerStudy {
+    background-image: url("./img/banner3.jpg");
+    color: black;
+}
+.bannerHealth {
+    background-image: url("./img/banner4.jpg");
+    color: crimson;
+}
+.bannerSleep {
+    background-image: url("./img/banner5.jpg");
+    color: burlywood;
+}
 .musicList > .wrap {
 
     margin: 10px 10px 10px 10px;

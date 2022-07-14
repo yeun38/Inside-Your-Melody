@@ -19,8 +19,11 @@ ca = certifi.where()
 client = MongoClient('mongodb+srv://test:sparta@cluster0.m59gg.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.dbsparta
 
+@app.route("/post", methods=["GET"])    #index.html에서 게시글작성 버튼 누르면 onclick 발동되면서 이 요청에 걸림.
+def post():
+    return render_template('post.html')
 
-@app.route("/post", methods=["POST"])
+@app.route("/post", methods=["POST"])   #게시글 작성
 def web_post_post():
     url_receive = request.form['url_give']    #서버로써 받아오는 값 3개
     comment_receive = request.form['comment_give']
@@ -29,6 +32,7 @@ def web_post_post():
         'url': url_receive,
         'category' : category_receive,
         'comment': comment_receive,
+        'like' : 0,
     }
     db.musics.insert_one(doc)
     return jsonify({'msg': '작성 완료!'})

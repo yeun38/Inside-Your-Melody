@@ -52,20 +52,9 @@ $(document).ready(function () {
                     for (let i = 0; i < rows.length; i++) {
                         let url = rows[i]['url']
                         let comment = rows[i]['comment']
+                        let like = rows[i]['like']
                         let aa = url.split('/',4)[3]
                         let temp_html = `<div class="col">
-                                            <div class="card">
-                                                <a href="banner.html"> <img src="https://i.ytimg.com/vi/J79HVjqxejs/hq720.jpg"
-                                                                            class="card-img-top" width="300px" alt="..."> </a>
-                            
-                                                <div class="card-body">
-                                                    <h5 class="card-title">제목 비올때 어쩌구</h5>
-                                                    <p class="card-text">코멘트</p>
-                                                    <p>좋아요수</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
                                             <div class="card">
                                                 
                                                 <a href="banner.html"> <img src="https://i.ytimg.com/vi_webp/${aa}/maxresdefault.webp"
@@ -74,7 +63,8 @@ $(document).ready(function () {
                                                 <div class="card-body">
                                                     <h5 class="card-title">${url}</h5>
                                                     <p class="card-text">${comment}</p>
-                                                    <p>좋아요수</p>
+                                                    <span class="material-symbols-outlined">favorite</span>
+                                                    <p class="like">${like}</p>
                                                 </div>
                                             </div>
                                         </div>`

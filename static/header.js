@@ -23,11 +23,11 @@ $(document).ready(function () {
 function post(username) {
     let url = $('#url').val()
     let category = $('#category').val()
-    if (url == '' || category == '--선택하기--') {
-        alert('URL 입력 혹은 카테고리를 선택해주세요')
+    let comment = $('#comment').val()
+    if (url == '' || category == '--선택하기--' || comment == '') {
+        alert('URL, 코멘트 입력 혹은 카테고리를 선택해주세요')
         return
     }
-    let comment = $('#comment').val()
     let today = new Date().toISOString()
     $.ajax({
         type: 'POST',
@@ -47,8 +47,35 @@ function post(username) {
 }
 
 function show_musics(category) {
-    if(category == undefined) {
+    if (category == undefined) {
         category = 0
+    }
+    switch (category) {
+        case 0 :
+            removeBan()
+            $('.bannerImg').addClass('bannerTotal')
+            $('.bannerImg').text('#전체보기')
+            break
+        case 1 :
+            removeBan()
+            $('.bannerImg').addClass('bannerRain')
+            $('.bannerImg').text('#비오는 날')
+            break
+        case 2 :
+            removeBan()
+            $('.bannerImg').addClass('bannerStudy')
+            $('.bannerImg').text('#공부할 때')
+            break
+        case 3 :
+            removeBan()
+            $('.bannerImg').addClass('bannerHealth')
+            $('.bannerImg').text('#운동할 때')
+            break
+        case 4 :
+            removeBan()
+            $('.bannerImg').addClass('bannerSleep')
+            $('.bannerImg').text('#잠들기 전')
+            break
     }
     $('#cards-box').empty()
     $.ajax({
@@ -67,8 +94,16 @@ function show_musics(category) {
                                                 <div class="card-body">
                                                     <h5 class="card-title">${url}</h5>
                                                     <p class="card-text">${comment}</p>
-                                                    <span class="material-symbols-outlined">favorite</span>
-                                                    <p class="like">${like}</p>
+                                                    <p class="card-text" style="display:flex; justify-content: space-around;">
+                                                        <span>
+                                                            <span class="material-symbols-outlined">조회수: </span>
+                                                            <span class="like">${like}</span>
+                                                        </span>
+                                                        <span>
+                                                            <span class="material-symbols-outlined">좋아요: </span>
+                                                            <span class="like">${like}</span>
+                                                        </span>
+                                                    </p>
                                                 </div>
                                                  </a>
                                             </div>
@@ -87,3 +122,10 @@ function msgCheck() {
     }
 }
 
+function removeBan() {
+    $('.bannerImg').removeClass('bannerTotal')
+    $('.bannerImg').removeClass('bannerRain')
+    $('.bannerImg').removeClass('bannerStudy')
+    $('.bannerImg').removeClass('bannerHealth')
+    $('.bannerImg').removeClass('bannerSleep')
+}

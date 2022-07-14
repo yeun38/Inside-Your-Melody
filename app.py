@@ -1,4 +1,4 @@
-import jwt , datetime, hashlib, requests, certifi
+import jwt, datetime, hashlib, requests, certifi
 from pymongo import MongoClient
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
@@ -30,6 +30,7 @@ def post():
 @app.route("/post", methods=["POST"])   #게시글 작성
 def web_post_post():
     url_receive = request.form['url_give']    #서버로써 받아오는 값 3개
+    aa = url_receive.split('/', 4)[3]
     comment_receive = request.form['comment_give']
     category_receive = request.form['category_give']
     username_receive = request.form['username_give']
@@ -45,6 +46,7 @@ def web_post_post():
         new_doc = {'board_count': count}
         db.musicIndex.update_one({'board_count': board_count['board_count']}, {'$set': new_doc})
 
+
     doc = {     #그 값3개를 doc에 딕셔너리형태로 넣고 db에 저장.
         'url': url_receive,
         'category' : category_receive,
@@ -52,7 +54,7 @@ def web_post_post():
         'username': username_receive,
         'write_time': today_receive,
         'board_index': count,
-        'like' : 0,
+        'like' : getlike(aa),
     }
     db.musics.insert_one(doc)
     return jsonify({'msg': '작성 완료!'})
@@ -71,10 +73,7 @@ def getlike(aa):
                                     part='snippet, contentDetails, statistics')
     response = request.execute()
 
-    title = response['items'][0]['snippet']['title']
-    views = response['items'][0]['statistics']['viewCount']
     likes = response['items'][0]['statistics']['likeCount']
-    #print(title, views, likes)
     return likes
 
 @app.route('/')
@@ -118,7 +117,8 @@ def sign_up():
     password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
     doc = {
         "username": username_receive,                               # 아이디
-        "password": password_hash                                   # 비밀번호
+        "password": password_hash,                                   # 비밀번호
+        'profile_pic_real': "profile_pics/admin.png"
     }
     db.users.insert_one(doc)
     return jsonify({'result': 'success'})
@@ -190,7 +190,7 @@ def posts(boardindex):
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
         music_info = db.musics.find_one({"board_index": int(boardindex)}, {'_id': False})
-        return render_template('posts.html',user_info=user_info, music_info=music_info)
+        return render_template('posts.html',user_info=user_info, music_info=music_info, successLogin='success')
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 

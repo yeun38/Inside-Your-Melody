@@ -5,6 +5,7 @@ import hashlib
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
+from googleapiclient.discovery import build
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -28,11 +29,12 @@ def web_post_post():
     url_receive = request.form['url_give']    #서버로써 받아오는 값 3개
     comment_receive = request.form['comment_give']
     category_receive = request.form['category_give']
+    aa = url_receive.split('/',4)[3]
     doc = {     #그 값3개를 doc에 딕셔너리형태로 넣고 db에 저장.
         'url': url_receive,
         'category' : category_receive,
         'comment': comment_receive,
-        'like' : 0,
+        'like' : getlike(aa),
     }
     db.musics.insert_one(doc)
     return jsonify({'msg': '작성 완료!'})
@@ -40,18 +42,20 @@ def web_post_post():
 @app.route("/musics", methods=["GET"])
 def musics_get():
     music_list = list(db.musics.find({},{'_id':False}))
+
     return jsonify({'musics':music_list})
 
-def getviewcount():
+def getlike(aa):
+    youtube = build('youtube', 'v3', developerKey='AIzaSyBYXINSpfN8PUzIbL78WWERYrjEa5MetuU')
+    request = youtube.videos().list(id=aa,
+                                    part='snippet, contentDetails, statistics')
+    response = request.execute()
 
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
-    data = requests.get('https://www.youtube.com/watch?v=CS7ZmPGixjQ', headers=headers)
-
-    soup = BeautifulSoup(data.text, 'html.parser')
-    viewcount = soup.selectOne('#formatted-snippet-text > span:nth-child(1)')
-    print(viewcount)
-
+    title = response['items'][0]['snippet']['title']
+    views = response['items'][0]['statistics']['viewCount']
+    likes = response['items'][0]['statistics']['likeCount']
+    #print(title, views, likes)
+    return likes
 
 @app.route('/')
 def home():

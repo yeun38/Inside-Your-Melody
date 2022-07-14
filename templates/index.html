@@ -113,7 +113,7 @@
                                                 </div>
                                             </div>
                                             <p id="help-id" class="help"></p>
-                                            <p id="help-id-login" class="help is-danger"></p>
+                                            <p id="help-login-id" class="help is-danger"></p>
                                             <div class="field">
                                                 <div class="control has-icons-left">
                                                     <input id="input-login-password" class="input" type="password"
@@ -121,12 +121,12 @@
                                                     <span class="icon is-small is-left"><i
                                                             class="fa fa-lock"></i></span>
                                                 </div>
-                                                <p id="help-password" class="help"></p>
+                                                <p id="help-login-password" class="help"></p>
                                             </div>
                                         </div>
                                         <div id="div-sign-in-or-up" class="has-text-centered">
                                             <nav class="level is-mobile">
-                                                <button class="level-item button is-sparta" onclick="sign_in()">
+                                                <button class="level-item button is-sparta login-modal-btn" onclick="sign_in()">
                                                     로그인
                                                 </button>
                                                 <hr>
@@ -141,8 +141,6 @@
             </article>
         </div>
     </div>
-    <button class="modal-close is-large" aria-label="close"
-            onclick='$("#modal-signup").removeClass("is-active")'></button>
 </div>
 
 {#signup 모달구역#}
@@ -167,7 +165,7 @@
                                                             class="fa fa-user"></i></span>
                                                 </div>
                                                 <div id="btn-check-dup" class="control">
-                                                    <button class="button is-sparta" onclick="check_dup()">중복확인</button>
+                                                    <button class="button is-sparta signup-modal-btn" onclick="check_dup()">중복확인</button>
                                                 </div>
 
                                             </div>
@@ -207,76 +205,6 @@
                                             </nav>
                                         </div>
 
-
-                                    </div>
-                                </article>
-                            </div>
-
-                        </div>
-                    </section>
-                </div>
-            </article>
-        </div>
-    </div>
-    <button class="modal-close is-large" aria-label="close"
-            onclick='$("#modal-signup").removeClass("is-active")'></button>
-</div>
-
-{#delete_user 모달구역#}
-<div class="modal" id="modal-delete-user">
-    <div class="modal-background" onclick='$("#modal-delete-user").removeClass("is-active")'></div>
-    <div class="modal-content">
-        <div class="box">
-            <article class="media">
-                <div class="media-content">
-                    {#회원탈퇴 기능#}
-                    <section class="section">
-                        <div class="container">
-                            <div class="box" style="max-width: 480px;margin:auto">
-                                <article class="media">
-                                    <div class="media-content">
-                                        <div class="content">
-                                            <div class="field has-addons">
-                                                <div class="control has-icons-left" style="width:100%">
-                                                    <input id="input-delete-username" class="input" type="text"
-                                                           placeholder="아이디">
-                                                    <span class="icon is-small is-left"><i
-                                                            class="fa fa-user"></i></span>
-                                                </div>
-
-                                            </div>
-                                            <p id="help-delete-id" class="help">아이디를 입력해주세요.</p>
-
-                                            <div class="field">
-                                                <div class="control has-icons-left">
-                                                    <input id="input-delete-password" class="input" type="password"
-                                                           placeholder="비밀번호">
-                                                    <span class="icon is-small is-left"><i
-                                                            class="fa fa-lock"></i></span>
-                                                </div>
-                                                <p id="help-delete-password" class="help">비밀번호를 입력해주세요.</p>
-                                            </div>
-                                        </div>
-
-                                        <div id="delete-user-box">
-                                            <div class="mb-5">
-                                                <div class="field">
-                                                    <div class="control has-icons-left" style="width:100%">
-                                                        <input id="input-delete-password2" class="input" type="password"
-                                                               placeholder="비밀번호 재입력">
-                                                        <span class="icon is-small is-left"><i
-                                                                class="fa fa-lock"></i></span>
-                                                    </div>
-                                                    <p id="help-delete-password2" class="help">비밀번호를 다시 한 번 입력해주세요.</p>
-                                                </div>
-                                            </div>
-
-                                            <nav class="level is-mobile">
-                                                <button class="level-item button is-sparta" onclick="delete_user()">
-                                                    회원탈퇴
-                                                </button>
-                                            </nav>
-                                        </div>
                                     </div>
                                 </article>
                             </div>

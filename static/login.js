@@ -99,19 +99,19 @@ function sign_in() {
     let password = $("#input-login-password").val()
 
     if (username == "") {
-        $("#help-id-login").text("아이디를 입력해주세요.")
+        $("#help-login-id").text("아이디를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
         $("#input-login-username").focus()
         return;
     } else {
-        $("#help-id-login").text("")
+        $("#help-login-id").text("")
     }
 
     if (password == "") {
-        $("#help-password-login").text("비밀번호를 입력해주세요.")
+        $("#help-login-password").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
         $("#input-login-password").focus()
         return;
     } else {
-        $("#help-password-login").text("")
+        $("#help-login-password").text("")
     }
     $.ajax({
         type: "POST",
@@ -143,7 +143,7 @@ function delete_user() {
     let password2 = $("#input-delete-password2").val()
 
     if (username == "") {
-        $("#help-delete-id").text("아이디를 입력해주세요.")
+        $("#help-delete-id").text("아이디를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
         $("#input-delete-username").focus()
         return;
     } else {
@@ -151,19 +151,20 @@ function delete_user() {
     }
 
     if (password == "") {
-        $("#help-password-delete").text("비밀번호를 재 입력해주세요.")
-        $("#input-delte-password").focus()
+        $("#help-delete-password").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
+        $("#input-delete-password").focus()
         return;
     } else {
-        $("#help-password-delete").text("")
+        $("#help-delete-password").text("")
     }
-    if (password2 == "") {
-        $("#help-password2-delete").text("비밀번호를 재 입력해주세요.")
-        $("#input-delte-password2").focus()
+    if (password2 != password) {
+        $("#help-delete-password2").text("비밀번호를 재 입력해주세요.").removeClass("is-safe").addClass("is-danger")
+        $("#input-delete-password2").focus()
         return;
     } else {
-        $("#help-password2-delete").text("")
+        $("#help-delete-password2").text("")
     }
+
     $.ajax({
         type: "POST",
         url: "/delete_user",

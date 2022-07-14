@@ -1,4 +1,6 @@
 function save_reply(){
+            let board_index = window.location.href
+            board_index = board_index.split('posts/')[1].split('?')[0]
             let comment = $('#textarea-post').val()
             let today = new Date().toISOString()
             $.ajax({
@@ -6,7 +8,8 @@ function save_reply(){
                 url: "/reply",
                 data: {
                     comment_give: comment,
-                    date_give: today
+                    date_give: today,
+                    board_index: board_index
                 },
                 success: function (response) {
                     $("#modal-post").removeClass("is-active")
@@ -40,13 +43,17 @@ function time2str(date) {
 
 function show_reply() {
     $("#post-box").empty()
+    let board_index = window.location.href
+    board_index = board_index.split('posts/')[1].split('?')[0]
+    console.log(board_index)
     $.ajax({
-        type: "GET",
-        url: "/reply",
-        data: {},
+        type: "POST",
+        url: "/reply_show",
+        data: {board_give: board_index},
         success: function (response) {
             if(response["result"] == "success"){
                 let replys = response["replys"]
+                let profile_pic_real = response["profile_pic_real"]
                 for (let i = 0; i < replys.length; i++) {
                     let reply = replys[i]
                     let time_post = new Date(reply["date"])
@@ -57,7 +64,7 @@ function show_reply() {
                                         <article class="media">
                                             <div class="media-left">
                                                 <a class="image is-64x64" href="#">
-                                                    <img class="is-rounded" src="/static/${reply['profile_pic_real']}"
+                                                    <img class="is-rounded" src="/static/${profile_pic_real}"
                                                          alt="Image">
                                                 </a>
                                             </div>

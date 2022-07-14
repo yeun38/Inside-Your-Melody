@@ -204,11 +204,12 @@ def save_reply():
         user_info = db.users.find_one({"username": payload["id"]})
         comment_receive = request.form["comment_give"]
         date_receive = request.form["date_give"]
+        board_index = request.form["board_index"]
         doc = {
             "username": user_info["username"],
-            "profile_pic_real": user_info["profile_pic_real"],
             "comment": comment_receive,
-            "date": date_receive
+            "date": date_receive,
+            "board_index": board_index
             }
         db.list.insert_one(doc)
         return jsonify({"result": "success", 'msg': 'reply succese'})
@@ -216,18 +217,21 @@ def save_reply():
         return redirect(url_for("home"))
 
 
-@app.route("/reply", methods=['GET'])
+@app.route("/reply_show", methods=['POST'])
 def show_reply():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        replys = list(db.list.find({}).sort("date", -1).limit(10))
+        board_index = request.form["board_give"]
+        replys = list(db.list.find({"board_index": board_index}).sort("date", -1).limit(10))
+        user_info = db.users.find_one({"username": payload["id"]})
+        profile_pic_real= user_info["profile_pic_real"]
         for reply in replys:
             reply["_id"] = str(reply["_id"])
             reply["count_heart"] = db.likes.count_documents({"post_id": reply["_id"], "type": "heart"})
             reply["heart_by_me"] = bool(db.likes.find_one({"post_id": reply["_id"], "type": "heart", "username": payload['id']}))
 
-        return jsonify({"result": "success","msg":"포스팅을 가져왔습니다.", "replys":replys})
+        return jsonify({"result": "success","msg":"포스팅을 가져왔습니다.", "replys":replys, "profile_pic_real": profile_pic_real})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 

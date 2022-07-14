@@ -3,7 +3,6 @@ from pymongo import MongoClient
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
-from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -57,9 +56,12 @@ def web_post_post():
     db.musics.insert_one(doc)
     return jsonify({'msg': '작성 완료!'})
 
-@app.route("/musics", methods=["GET"])
-def musics_get():
-    music_list = list(db.musics.find({},{'_id':False}))
+@app.route("/musics/<category>", methods=["GET"])
+def musics_get(category):
+    if category == '0':
+        music_list = list(db.musics.find({},{'_id': False}).sort("date", -1).limit(20))
+    else:
+        music_list = list(db.musics.find({"category": category}, {'_id': False}).sort("date", -1).limit(20))
     return jsonify({'musics':music_list})
 
 @app.route('/')

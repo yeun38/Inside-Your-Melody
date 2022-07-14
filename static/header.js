@@ -63,7 +63,7 @@ function show_musics(category) {
                 let like = rows[i]['like']
                 let temp_html = `<div class="col">
                                             <div class="card">
-                                                <a href="#"><img src="../static/profile_pics/default.jpg">
+                                                <a href="/posts/${rows[i]['board_index']}"><img src="../static/profile_pics/default.jpg">
                                                 <div class="card-body">
                                                     <h5 class="card-title">${url}</h5>
                                                     <p class="card-text">${comment}</p>

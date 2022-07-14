@@ -90,20 +90,18 @@ function show_musics(category) {
                 let like = rows[i]['like']
                 let temp_html = `<div class="col">
                                             <div class="card">
-                                                <a href="/posts/${rows[i]['board_index']}"><img src="../static/profile_pics/default.jpg">
+                                              
+                                                <a href="posts.html"> <img src="https://i.ytimg.com/vi_webp/${aa}/maxresdefault.webp"
+                                                                            class="card-img-top" width="300px" alt="..."> </a>
+                                                <iframe width="560" height="315" src="https://www.youtube.com/embed/${aa}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                                 <div class="card-body">
                                                     <h5 class="card-title">${url}</h5>
                                                     <p class="card-text">${comment}</p>
-                                                    <p class="card-text" style="display:flex; justify-content: space-around;">
-                                                        <span>
-                                                            <span class="material-symbols-outlined">조회수: </span>
-                                                            <span class="like">${like}</span>
-                                                        </span>
-                                                        <span>
-                                                            <span class="material-symbols-outlined">좋아요: </span>
-                                                            <span class="like">${like}</span>
-                                                        </span>
-                                                    </p>
+                                                    <div class ="wrap2">
+                                                        <span class="material-symbols-outlined">favorite</span>
+                                                        <p class="like">${like}</p>
+                                                    </div>
+
                                                 </div>
                                                  </a>
                                             </div>

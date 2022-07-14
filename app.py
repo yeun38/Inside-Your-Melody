@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
+from googleapiclient.discovery import build
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -63,6 +64,18 @@ def musics_get(category):
     else:
         music_list = list(db.musics.find({"category": category}, {'_id': False}).sort("write_time", -1).limit(20))
     return jsonify({'musics':music_list})
+
+def getlike(aa):
+    youtube = build('youtube', 'v3', developerKey='AIzaSyBYXINSpfN8PUzIbL78WWERYrjEa5MetuU')
+    request = youtube.videos().list(id=aa,
+                                    part='snippet, contentDetails, statistics')
+    response = request.execute()
+
+    title = response['items'][0]['snippet']['title']
+    views = response['items'][0]['statistics']['viewCount']
+    likes = response['items'][0]['statistics']['likeCount']
+    #print(title, views, likes)
+    return likes
 
 @app.route('/')
 def home():

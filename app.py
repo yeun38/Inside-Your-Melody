@@ -16,13 +16,12 @@ import certifi
 
 ca = certifi.where()
 
-client = MongoClient('mongodb+srv://test:sparta@cluster0.m59gg.mongodb.net/Cluster0?retryWrites=true&w=majority')
-db = client.dbsparta
-
-# 종원 db 연결
-# client = MongoClient('mongodb+srv://test:sparta@cluster0.d7gym6j.mongodb.net/Cluster0?retryWrites=true&w=majority',
-#                      tlsCAFile=ca)
+# client = MongoClient('mongodb+srv://test:sparta@cluster0.m59gg.mongodb.net/Cluster0?retryWrites=true&w=majority')
 # db = client.dbsparta
+
+client = MongoClient('mongodb+srv://test:sparta@cluster0.d7gym6j.mongodb.net/Cluster0?retryWrites=true&w=majority',
+                     tlsCAFile=ca)
+db = client.dbsparta
 
 
 @app.route("/post", methods=["GET"])    #index.html에서 게시글작성 버튼 누르면 onclick 발동되면서 이 요청에 걸림.

@@ -176,9 +176,8 @@ def posts(boardindex):
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
-        post_index = db.musics.find_one({"board_index": boardindex}, {'_id': False})
-
-        return render_template('posts.html',user_info=user_info, post_index=post_index)
+        music_info = db.musics.find_one({"board_index": int(boardindex)}, {'_id': False})
+        return render_template('posts.html',user_info=user_info, music_info=music_info)
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
@@ -241,22 +240,6 @@ def update_like():
         return jsonify({"result": "success", 'msg': 'updated', "count": count})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
-
-@app.route("/send", methods=["POST"])
-def send():
-    url_receive = request.form['url_give']
-    like_receive = request.form['like_give']
-    comment_receive = request.form['comment_give']
-
-    doc = {
-        'url':url_receive,
-        'like': like_receive,
-        'comment': comment_receive
-    }
-    db.bucket.insert_one(doc)
-
-    return jsonify({"result": "success", 'msg': 'reply succese'})
-
 
 
 if __name__ == '__main__':

@@ -40,13 +40,13 @@ header {
 }
 .ico {
     padding-left: 40px;
-    background-size: 25px;
+    background-size: 20px;
     background-repeat: no-repeat;
 }
 .loginIco {
     padding-left: 45px;
     background-image: url("./img/loginImg.png");
-    background-size: 30px;
+    background-size: 25px;
 }
 .viewAllIco {background-image: url("./img/viewAll.png");}
 .rainIco {background-image: url("./img/rain.png");}

@@ -3,7 +3,6 @@ from pymongo import MongoClient
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
-from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -12,9 +11,7 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 SECRET_KEY = 'SPARTA'
 
 ca = certifi.where()
-client = MongoClient('mongodb+srv://test:sparta@cluster0.ny500iw.mongodb.net/Cluster0?retryWrites=true&w=majority')
-# client = MongoClient('mongodb+srv://test:sparta@cluster0.d7gym6j.mongodb.net/Cluster0?retryWrites=true&w=majority',
-#                      tlsCAFile=ca)
+client = MongoClient('mongodb+srv://narcis1205:1205@narcis1205.j99xn.mongodb.net/project0?retryWrites=true&w=majority')
 db = client.dbsparta
 
 @app.route("/post", methods=["GET"])    #index.html에서 게시글작성 버튼 누르면 onclick 발동되면서 이 요청에 걸림.
@@ -59,9 +56,12 @@ def web_post_post():
     db.musics.insert_one(doc)
     return jsonify({'msg': '작성 완료!'})
 
-@app.route("/musics", methods=["GET"])
-def musics_get():
-    music_list = list(db.musics.find({},{'_id':False}))
+@app.route("/musics/<category>", methods=["GET"])
+def musics_get(category):
+    if category == '0':
+        music_list = list(db.musics.find({},{'_id': False}).sort("date", -1).limit(20))
+    else:
+        music_list = list(db.musics.find({"category": category}, {'_id': False}).sort("date", -1).limit(20))
     return jsonify({'musics':music_list})
 
 @app.route('/')
@@ -169,7 +169,8 @@ def delete_user():
     # 찾지 못하면
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
-
+        
+        
 @app.route('/posts/<boardindex>')
 def posts(boardindex):
     token_receive = request.cookies.get('mytoken')
@@ -241,8 +242,6 @@ def update_like():
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
-
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
-
 

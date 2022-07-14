@@ -12,8 +12,7 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 SECRET_KEY = 'SPARTA'
 
 ca = certifi.where()
-
-client = MongoClient('mongodb+srv://narcis1205:1205@narcis1205.j99xn.mongodb.net/?retryWrites=true&w=majority')
+client = MongoClient('mongodb+srv://narcis1205:1205@narcis1205.j99xn.mongodb.net/project0?retryWrites=true&w=majority')
 db = client.dbsparta
 
 @app.route("/post", methods=["GET"])    #index.html에서 게시글작성 버튼 누르면 onclick 발동되면서 이 요청에 걸림.
@@ -35,12 +34,24 @@ def web_post_post():
     category_receive = request.form['category_give']
     username_receive = request.form['username_give']
     today_receive = request.form['today_give']
+    musicsList = list(db.musics.find({}, {'_id': False}))
+    count = 1
+    if musicsList == []:
+        new_doc = {'board_count': count}
+        db.musicIndex.insert_one(new_doc)
+    else:
+        board_count = db.musicIndex.find_one()
+        count = int(board_count['board_count']) + 1
+        new_doc = {'board_count': count}
+        db.musicIndex.update_one({'board_count': board_count['board_count']}, {'$set': new_doc})
+
     doc = {     #그 값3개를 doc에 딕셔너리형태로 넣고 db에 저장.
         'url': url_receive,
         'category' : category_receive,
         'comment': comment_receive,
         'username': username_receive,
         'write_time': today_receive,
+        'board_index': count,
         'like' : 0,
     }
     db.musics.insert_one(doc)

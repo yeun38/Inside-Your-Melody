@@ -98,3 +98,16 @@ main {margin-left: 300px;}
     color: white;
 }
 
+.musicList > .wrap {
+
+    margin: 10px 10px 10px 10px;
+}
+
+.mypost {
+            max-width: 500px;
+            width: 95%;
+            margin: 20px auto 0px auto;
+
+            box-shadow: 0px 0px 3px 0px;
+            padding: 20px;
+        }

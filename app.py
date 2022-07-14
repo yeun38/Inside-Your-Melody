@@ -15,25 +15,63 @@ SECRET_KEY = 'SPARTA'
 import certifi
 
 ca = certifi.where()
-# client = MongoClient('mongodb+srv://narcis1205:1205@narcis1205.j99xn.mongodb.net/project0?retryWrites=true&w=majority')
-client = MongoClient('mongodb+srv://test:sparta@cluster0.d7gym6j.mongodb.net/Cluster0?retryWrites=true&w=majority',
-                     tlsCAFile=ca)
+
+client = MongoClient('mongodb+srv://test:sparta@cluster0.m59gg.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.dbsparta
+
+# 종원 db 연결
+# client = MongoClient('mongodb+srv://test:sparta@cluster0.d7gym6j.mongodb.net/Cluster0?retryWrites=true&w=majority',
+#                      tlsCAFile=ca)
+# db = client.dbsparta
+
+
+@app.route("/post", methods=["GET"])    #index.html에서 게시글작성 버튼 누르면 onclick 발동되면서 이 요청에 걸림.
+def post():
+    return render_template('post.html')
+
+@app.route("/post", methods=["POST"])   #게시글 작성
+def web_post_post():
+    url_receive = request.form['url_give']    #서버로써 받아오는 값 3개
+    comment_receive = request.form['comment_give']
+    category_receive = request.form['category_give']
+    doc = {     #그 값3개를 doc에 딕셔너리형태로 넣고 db에 저장.
+        'url': url_receive,
+        'category' : category_receive,
+        'comment': comment_receive,
+        'like' : 0,
+    }
+    db.musics.insert_one(doc)
+    return jsonify({'msg': '작성 완료!'})
+
+@app.route("/musics", methods=["GET"])
+def musics_get():
+    music_list = list(db.musics.find({},{'_id':False}))
+    return jsonify({'musics':music_list})
+
+def getviewcount():
+
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
+    data = requests.get('https://www.youtube.com/watch?v=CS7ZmPGixjQ', headers=headers)
+
+    soup = BeautifulSoup(data.text, 'html.parser')
+    viewcount = soup.selectOne('#formatted-snippet-text > span:nth-child(1)')
+    print(viewcount)
 
 
 @app.route('/')
 def home():
-    if (request.cookies.get('mytoken') == None):
+    if(request.cookies.get('mytoken') == None):
         return render_template('index.html')
     else:
         return render_template('index.html', successLogin='success')
+
 
 
 @app.route('/login')
 def login():
     msg = request.args.get("msg")
     return render_template('index.html', msg=msg)
-
 
 @app.route('/sign_in', methods=['POST'])
 def sign_in():
@@ -54,7 +92,7 @@ def sign_in():
         return jsonify({'result': 'success', 'token': token})
     # 찾지 못하면
     else:
-        return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
+        return jsonify({'result': 'fail', 'msg': '일치하는 계정이 없습니다.'})
 
 
 @app.route('/sign_up/save', methods=['POST'])
@@ -63,8 +101,8 @@ def sign_up():
     password_receive = request.form['password_give']
     password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
     doc = {
-        "username": username_receive,  # 아이디
-        "password": password_hash  # 비밀번호
+        "username": username_receive,                               # 아이디
+        "password": password_hash                                   # 비밀번호
     }
     db.users.insert_one(doc)
     return jsonify({'result': 'success'})
@@ -75,7 +113,6 @@ def check_dup():
     username_receive = request.form['username_give']
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
-
 
 @app.route('/mypage')
 def mypage():
@@ -89,7 +126,6 @@ def mypage():
         return redirect(url_for("/", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("/", msg="로그인 정보가 존재하지 않습니다."))
-
 
 @app.route('/update_profile', methods=['POST'])
 def save_img():
@@ -106,14 +142,13 @@ def save_img():
             filename = secure_filename(file.filename)
             extension = filename.split(".")[-1]
             file_path = f"profile_pics/{username}.{extension}"
-            file.save("./static/" + file_path)
+            file.save("./static/"+file_path)
             new_doc["profile_pic"] = filename
             new_doc["profile_pic_real"] = file_path
-        db.users.update_one({'username': payload['id']}, {'$set': new_doc})
+        db.users.update_one({'username': payload['id']}, {'$set':new_doc})
         return jsonify({"result": "success", 'msg': '프로필을 업데이트했습니다.'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
-
 
 @app.route('/delete_user', methods=['POST'])
 def delete_user():
@@ -134,5 +169,7 @@ def delete_user():
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
 
+
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
+

@@ -99,19 +99,19 @@ function sign_in() {
     let password = $("#input-login-password").val()
 
     if (username == "") {
-        $("#help-id-login").text("아이디를 입력해주세요.")
+        $("#help-login-id").text("아이디를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
         $("#input-login-username").focus()
         return;
     } else {
-        $("#help-id-login").text("")
+        $("#help-login-id").text("")
     }
 
     if (password == "") {
-        $("#help-password-login").text("비밀번호를 입력해주세요.")
+        $("#help-login-password").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
         $("#input-login-password").focus()
         return;
     } else {
-        $("#help-password-login").text("")
+        $("#help-login-password").text("")
     }
     $.ajax({
         type: "POST",
@@ -151,7 +151,7 @@ function delete_user() {
     }
 
     if (password == "") {
-        $("#help-delete-password").text("비밀번호를 재 입력해주세요.").removeClass("is-safe").addClass("is-danger")
+        $("#help-delete-password").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
         $("#input-delete-password").focus()
         return;
     } else {

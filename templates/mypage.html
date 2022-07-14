@@ -102,7 +102,9 @@
         </div>
         <div class="profileBtn">
             <button class="button is-success is-light" onclick="profileModify()">수정</button>
+
             <button class="button is-danger is-light" onclick='$("#modal-delete-user").addClass("is-active")'>탈퇴</button>
+
         </div>
         <div class="modifyBtn mp_hide">
             <button class="button is-primary is-light" onclick="modifyComplete()">완료</button>
@@ -111,7 +113,7 @@
     </div>
     <div class="musicList">
 
-        {#delete_user 모달구역#}
+    {#delete_user 모달구역#}
     <div class="modal" id="modal-delete-user">
     <div class="modal-background" onclick='$("#modal-delete-user").removeClass("is-active")'></div>
     <div class="modal-content">
@@ -174,9 +176,6 @@
                 </div>
             </article>
         </div>
-    </div>
-</div>
-
     </div>
 </main>
 </body>

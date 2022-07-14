@@ -149,7 +149,8 @@ def save_img():
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
-@app.route('/delete_user', methods=['POST'])
+@app.route('/
+_user', methods=['POST'])
 def delete_user():
     username_receive = request.form['username_give']
     password_receive = request.form['password_give']

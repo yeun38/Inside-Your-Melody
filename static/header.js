@@ -94,8 +94,16 @@ function show_musics(category) {
                                                 <div class="card-body">
                                                     <h5 class="card-title">${url}</h5>
                                                     <p class="card-text">${comment}</p>
-                                                    <span class="material-symbols-outlined">favorite</span>
-                                                    <p class="like">${like}</p>
+                                                    <p class="card-text" style="display:flex; justify-content: space-around;">
+                                                        <span>
+                                                            <span class="material-symbols-outlined">조회수: </span>
+                                                            <span class="like">${like}</span>
+                                                        </span>
+                                                        <span>
+                                                            <span class="material-symbols-outlined">좋아요: </span>
+                                                            <span class="like">${like}</span>
+                                                        </span>
+                                                    </p>
                                                 </div>
                                                  </a>
                                             </div>

@@ -1,10 +1,9 @@
+import jwt , datetime, hashlib, requests, certifi
 from pymongo import MongoClient
-import jwt
-import datetime
-import hashlib
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -12,26 +11,36 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
-import certifi
-
 ca = certifi.where()
 
-client = MongoClient('mongodb+srv://test:sparta@cluster0.m59gg.mongodb.net/Cluster0?retryWrites=true&w=majority')
+client = MongoClient('mongodb+srv://narcis1205:1205@narcis1205.j99xn.mongodb.net/?retryWrites=true&w=majority')
 db = client.dbsparta
 
 @app.route("/post", methods=["GET"])    #index.html에서 게시글작성 버튼 누르면 onclick 발동되면서 이 요청에 걸림.
 def post():
-    return render_template('post.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"username": payload["id"]})
+        return render_template('post.html', user_info=user_info, successLogin='success')
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("/", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("/", msg="로그인 정보가 존재하지 않습니다."))
 
 @app.route("/post", methods=["POST"])   #게시글 작성
 def web_post_post():
     url_receive = request.form['url_give']    #서버로써 받아오는 값 3개
     comment_receive = request.form['comment_give']
     category_receive = request.form['category_give']
+    username_receive = request.form['username_give']
+    today_receive = request.form['today_give']
     doc = {     #그 값3개를 doc에 딕셔너리형태로 넣고 db에 저장.
         'url': url_receive,
         'category' : category_receive,
         'comment': comment_receive,
+        'username': username_receive,
+        'write_time': today_receive,
         'like' : 0,
     }
     db.musics.insert_one(doc)
@@ -42,25 +51,12 @@ def musics_get():
     music_list = list(db.musics.find({},{'_id':False}))
     return jsonify({'musics':music_list})
 
-def getviewcount():
-
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
-    data = requests.get('https://www.youtube.com/watch?v=CS7ZmPGixjQ', headers=headers)
-
-    soup = BeautifulSoup(data.text, 'html.parser')
-    viewcount = soup.selectOne('#formatted-snippet-text > span:nth-child(1)')
-    print(viewcount)
-
-
 @app.route('/')
 def home():
     if(request.cookies.get('mytoken') == None):
         return render_template('index.html')
     else:
         return render_template('index.html', successLogin='success')
-
-
 
 @app.route('/login')
 def login():
@@ -114,7 +110,6 @@ def mypage():
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
-        print(user_info)
         return render_template('mypage.html', user_info=user_info, successLogin='success')
     except jwt.ExpiredSignatureError:
         return redirect(url_for("/", msg="로그인 시간이 만료되었습니다."))

@@ -52,7 +52,8 @@ function show_reply() {
                     let time_post = new Date(reply["date"])
                     let time_before = time2str(time_post)
                     let class_heart = reply['heart_by_me'] ? "fa-heart": "fa-heart-o"
-                    let html_temp = `<div class="box" id="${replys["_id"]}">
+                    let count_heart = reply['count_heart']
+                    let html_temp = `<div class="box" id="${reply["_id"]}">
                                         <article class="media">
                                             <div class="media-left">
                                                 <a class="image is-64x64" href="#">
@@ -71,10 +72,10 @@ function show_reply() {
                                                 <nav class="level is-mobile">
                                                     <div class="level-left">
                                                         <a class="level-item is-sparta" aria-label="heart"
-                                                           onclick="toggle_like('${replys["_id"]}', 'heart')">
-                                                            <span class="icon is-small"><i class="fa ${class_heart}"
-                                                                                           aria-hidden="true"></i></span>&nbsp;<span
-                                                            class="like-num"></span>
+                                                           onclick="toggle_like('${reply["_id"]}', 'heart')">
+                                                            <span class="icon is-small"><i class="fa ${class_heart}" aria-hidden="true"></i></span>
+                                                                &nbsp;
+                                                                <span class="like-num">${count_heart}</span>
                                                         </a>
                                                     </div>
                 
